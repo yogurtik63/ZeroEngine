@@ -96,7 +96,14 @@ int main(int argc, char** argv)
 
         auto tex = resourceManager.loadTexture("DefaultTexture", "res/textures/map_13x10.png");
 
-        auto pSprite = resourceManager.loadSprite("NewSprite", "DefaultTexture", "SpriteShader", 50, 100);
+        std::vector<std::string> subTexturesName = 
+        {
+            "leftTopGrass", "middleTopGrass", "rightTopGrass", "leftDown_rightTopGrass", "leftTopCorner_rightDownGrass", "dirt1", "dirt2", "dirt3", "smallGrass", "fruit", "stone", "flowers", "",
+            "leftGrass", "middleGrass", "rightGrass"
+        };
+        auto pTextureAtlas = resourceManager.loadTextureAtlas("DefaultTextureAtlas", "res/textures/map_13x10.png", std::move(subTexturesName), 16, 16);
+
+        auto pSprite = resourceManager.loadSprite("NewSprite", "DefaultTextureAtlas", "SpriteShader", 100, 100, "dirt1");
         pSprite->setPosition(glm::vec2(300, 100));
 
         GLuint points_vbo = 0;
