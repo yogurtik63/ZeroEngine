@@ -138,25 +138,25 @@ bool Game::init() {
 
     std::vector<std::pair<std::string, uint64_t>> playerRightState;
 
-    playerRightState.emplace_back(std::make_pair<std::string, uint64_t>("playerRight1", 500000000));
-    playerRightState.emplace_back(std::make_pair<std::string, uint64_t>("playerRight2", 500000000));
-    playerRightState.emplace_back(std::make_pair<std::string, uint64_t>("playerRight3", 500000000));
-    playerRightState.emplace_back(std::make_pair<std::string, uint64_t>("playerRight4", 500000000));
-    playerRightState.emplace_back(std::make_pair<std::string, uint64_t>("playerRight5", 500000000));
-    playerRightState.emplace_back(std::make_pair<std::string, uint64_t>("playerRight6", 500000000));
-    playerRightState.emplace_back(std::make_pair<std::string, uint64_t>("playerRight7", 500000000));
-    playerRightState.emplace_back(std::make_pair<std::string, uint64_t>("playerRight8", 500000000));
+    playerRightState.emplace_back(std::make_pair<std::string, uint64_t>("playerRight1", 250000000));
+    playerRightState.emplace_back(std::make_pair<std::string, uint64_t>("playerRight2", 250000000));
+    playerRightState.emplace_back(std::make_pair<std::string, uint64_t>("playerRight3", 250000000));
+    playerRightState.emplace_back(std::make_pair<std::string, uint64_t>("playerRight4", 250000000));
+    playerRightState.emplace_back(std::make_pair<std::string, uint64_t>("playerRight5", 250000000));
+    playerRightState.emplace_back(std::make_pair<std::string, uint64_t>("playerRight6", 250000000));
+    playerRightState.emplace_back(std::make_pair<std::string, uint64_t>("playerRight7", 250000000));
+    playerRightState.emplace_back(std::make_pair<std::string, uint64_t>("playerRight8", 250000000));
 
     std::vector<std::pair<std::string, uint64_t>> playerLeftState;
 
-    playerLeftState.emplace_back(std::make_pair<std::string, uint64_t>("playerLeft1", 500000000));
-    playerLeftState.emplace_back(std::make_pair<std::string, uint64_t>("playerLeft2", 500000000));
-    playerLeftState.emplace_back(std::make_pair<std::string, uint64_t>("playerLeft3", 500000000));
-    playerLeftState.emplace_back(std::make_pair<std::string, uint64_t>("playerLeft4", 500000000));
-    playerLeftState.emplace_back(std::make_pair<std::string, uint64_t>("playerLeft5", 500000000));
-    playerLeftState.emplace_back(std::make_pair<std::string, uint64_t>("playerLeft6", 500000000));
-    playerLeftState.emplace_back(std::make_pair<std::string, uint64_t>("playerLeft7", 500000000));
-    playerLeftState.emplace_back(std::make_pair<std::string, uint64_t>("playerLeft8", 500000000));
+    playerLeftState.emplace_back(std::make_pair<std::string, uint64_t>("playerLeft1", 250000000));
+    playerLeftState.emplace_back(std::make_pair<std::string, uint64_t>("playerLeft2", 250000000));
+    playerLeftState.emplace_back(std::make_pair<std::string, uint64_t>("playerLeft3", 250000000));
+    playerLeftState.emplace_back(std::make_pair<std::string, uint64_t>("playerLeft4", 250000000));
+    playerLeftState.emplace_back(std::make_pair<std::string, uint64_t>("playerLeft5", 250000000));
+    playerLeftState.emplace_back(std::make_pair<std::string, uint64_t>("playerLeft6", 250000000));
+    playerLeftState.emplace_back(std::make_pair<std::string, uint64_t>("playerLeft7", 250000000));
+    playerLeftState.emplace_back(std::make_pair<std::string, uint64_t>("playerLeft8", 250000000));
 
     pPlayerAnimatedSprite->insertState("playerRightState", std::move(playerRightState));
     pPlayerAnimatedSprite->insertState("playerLeftState", std::move(playerLeftState));

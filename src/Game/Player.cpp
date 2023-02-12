@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "../Renderer/AnimatedSprite.h"
 
-Player::Player(std::shared_ptr<Renderer::AnimatedSprite> pSprite, const float velocity, const glm::vec2& position)
+Player::Player(std::shared_ptr<RenderEngine::AnimatedSprite> pSprite, const float velocity, const glm::vec2& position)
 	: m_eOrientation(EOrintation::Top)
 	, m_pSprite(std::move(pSprite))
 	, m_move(false)
