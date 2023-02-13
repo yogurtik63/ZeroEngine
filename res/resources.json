@@ -1,0 +1,129 @@
+{
+	"shaders": [
+		{
+			"name": "spriteShader",
+			"filePath_v": "res/shaders/vSprite.txt",
+			"filePath_f": "res/shaders/fSprite.txt"
+		}
+	],
+	
+	"textureAtlases": [
+		{
+			"name": "mapTextureAtlas",
+			"filePath": "res/textures/map_13x10.png",
+			"subTextureWidth": 16,
+			"subTextureHeight": 16,
+			"subTextures": [
+				"leftTopGrass", "middleTopGrass", "rightTopGrass", "leftDown_rightTopGrass", "leftTopCorner_rightDownGrass", "dirt1", "dirt2", "dirt3", "smallGrass", "fruit", "stone", "flowers", "",
+				"leftGrass", "middleGrass", "rightGrass", "rightDown_FullGrass", "leftDown_FullGrass", "", "", "", "", "", "",  "", "",
+				"", "", "", "", "", "",  "", "", "", "", "", "", "",
+				"", "", "", "", "", "",  "", "", "", "", "", "", "",
+				"", "", "", "", "", "",  "", "", "", "", "", "", "",
+				"", "", "", "", "", "",  "", "", "", "", "", "", "",
+				"", "", "", "", "", "",  "", "", "", "", "", "", "",
+				"", "", "", "", "", "",  "", "", "", "", "", "", "",
+				"rightChicken_1", "rightChicken_2", "rightChicken_3", "rightChicken_4"
+			]
+		},
+		
+		{
+			"name": "playerTextureAtlas",
+			"filePath": "res/textures/player_1.png",
+			"subTextureWidth": 16,
+			"subTextureHeight": 22,
+			"subTextures": [
+				"playerRight1", "playerRight2", "playerRight3", "playerRight4",
+				"playerRight5", "playerRight6", "playerRight7", "playerRight8",
+				"playerLeft1", "playerLeft2", "playerLeft3", "playerLeft4",
+				"playerLeft5", "playerLeft6", "playerLeft7", "playerLeft8"
+			]
+		}
+	],
+	
+	"animatedSprites": [
+	{
+		"name": "playerAnimatedSprite",
+		"textureAtlas": "playerTextureAtlas",
+		"shader": "spriteShader",
+		"initialWidth": 48,
+		"initialHeight": 66,
+		"initialSubTexture": "playerRight1",
+		"states": [
+			{
+				"stateName": "playerRightState",
+				"frames": [
+					{
+						"subTexture": "playerRight1",
+						"duration": 250000000
+					}, 
+					{
+						"subTexture": "playerRight2",
+						"duration": 250000000
+					}, 
+					{
+						"subTexture": "playerRight3",
+						"duration": 250000000
+					}, 
+					{
+						"subTexture": "playerRight4",
+						"duration": 250000000
+					}, 
+					{
+						"subTexture": "playerRight5",
+						"duration": 250000000
+					}, 
+					{
+						"subTexture": "playerRight6",
+						"duration": 250000000
+					}, 
+					{
+						"subTexture": "playerRight7",
+						"duration": 250000000
+					}, 
+					{
+						"subTexture": "playerRight8",
+						"duration": 250000000
+					}
+				]
+			},
+			{
+				"stateName": "playerLeftState",
+				"frames": [
+					{
+						"subTexture": "playerLeft1",
+						"duration": 250000000
+					}, 
+					{
+						"subTexture": "playerLeft2",
+						"duration": 250000000
+					}, 
+					{
+						"subTexture": "playerLeft3",
+						"duration": 250000000
+					}, 
+					{
+						"subTexture": "playerLeft4",
+						"duration": 250000000
+					}, 
+					{
+						"subTexture": "playerLeft5",
+						"duration": 250000000
+					}, 
+					{
+						"subTexture": "playerLeft6",
+						"duration": 250000000
+					}, 
+					{
+						"subTexture": "playerLeft7",
+						"duration": 250000000
+					}, 
+					{
+						"subTexture": "playerLeft8",
+						"duration": 250000000
+					}
+				]
+			}
+		]
+	}
+	]
+}

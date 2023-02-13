@@ -16,6 +16,11 @@ public:
 		Right
 	};
 
+	enum class LastOrientation {
+		Left,
+		Right
+	};
+
 	Player(std::shared_ptr<RenderEngine::AnimatedSprite> pSprite, const float velocity, const glm::vec2& position);
 
 	void render() const;
@@ -30,4 +35,5 @@ private:
 	float m_velocity;
 	glm::vec2 m_position;
 	glm::vec2 m_moveOffset;
+	
 };
