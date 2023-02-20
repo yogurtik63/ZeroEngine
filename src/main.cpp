@@ -9,14 +9,30 @@
 #include "Resources/ResourceManager.h"
 #include "Renderer/Renderer.h"
 
-glm::ivec2 g_windowSize(640, 480);
-Game g_game(g_windowSize);
+glm::ivec2 g_windowSize(10 * 16, 10 * 16);
+std::unique_ptr<Game> g_game = std::make_unique<Game>(g_windowSize);
 
 
 void glfwWindowSizeCall(GLFWwindow* pWindow, int width, int height) {
     g_windowSize.x = width;
     g_windowSize.y = height;
-    RenderEngine::Renderer::setViewport(width, height);
+
+    const float map_aspect_ratio = 10.f / 10.f;
+    unsigned int viewPortWidth = g_windowSize.x;
+    unsigned int viewPortHeight = g_windowSize.y;
+    unsigned int viewPortLeftOffset = 0;
+    unsigned int viewPortBottomOffset = 0;
+
+    if (static_cast<float>(g_windowSize.x) / g_windowSize.y > map_aspect_ratio) {
+        viewPortWidth = static_cast<unsigned int>(g_windowSize.y * map_aspect_ratio);
+        viewPortLeftOffset = (g_windowSize.x - viewPortWidth) / 2;
+    }
+    else {
+        viewPortHeight = static_cast<unsigned int>(g_windowSize.x / map_aspect_ratio);
+        viewPortBottomOffset = (g_windowSize.y - viewPortHeight) / 2;
+    }
+
+    RenderEngine::Renderer::setViewport(viewPortWidth, viewPortHeight, viewPortLeftOffset, viewPortBottomOffset);
 }
 
 void glfwKeyCallback(GLFWwindow* pWindow, int key, int scancode, int action, int mode)
@@ -25,7 +41,7 @@ void glfwKeyCallback(GLFWwindow* pWindow, int key, int scancode, int action, int
     {
         glfwSetWindowShouldClose(pWindow, GL_TRUE);
     }
-    g_game.setKey(key, action);
+    g_game->setKey(key, action);
 }
 
 int main(int argc, char** argv)
@@ -59,7 +75,7 @@ int main(int argc, char** argv)
 		std::cout << "Can't load GLAD." << std::endl;
 		return -1;
 	}
-
+    ;
     std::cout << "Renderer: " << RenderEngine::Renderer::getRendererStr << std::endl;
     std::cout << "OpenGL version: " << RenderEngine::Renderer::getVersionStr << std::endl;
 	
@@ -67,7 +83,7 @@ int main(int argc, char** argv)
 	
     {
         ResourceManager::setExecutablePath(argv[0]);
-        g_game.init();
+        g_game->init();
 
         auto lastTime = std::chrono::high_resolution_clock::now();
 
@@ -81,18 +97,20 @@ int main(int argc, char** argv)
             uint64_t duration = std::chrono::duration_cast<std::chrono::nanoseconds>(currentTime - lastTime).count();
             lastTime = currentTime;
             
-            g_game.update(duration);
+            g_game->update(duration);
 
             /* Render here */
             RenderEngine::Renderer::clear();
 
-            g_game.render();
+            g_game->render();
 
             /* Swap front and back buffers */
             glfwSwapBuffers(pWindow);
         }
+        g_game = nullptr;
         ResourceManager::unloadAllResources();
     }
+
     glfwTerminate();
     return 0;
 }

@@ -5,6 +5,7 @@
 #include <memory>
 
 class Player;
+class Level;
 
 class Game {
 public:
@@ -27,4 +28,5 @@ private:
 	glm::ivec2 m_windowSize;
 	EGameState m_eCurrentGameState;
 	std::unique_ptr<Player> m_pPlayer;
+	std::unique_ptr<Level> m_pLevel;
 };

@@ -15,8 +15,8 @@
 			"subTextureHeight": 16,
 			"subTextures": [
 				"leftTopGrass", "middleTopGrass", "rightTopGrass", "leftDown_rightTopGrass", "leftTopCorner_rightDownGrass", "dirt1", "dirt2", "dirt3", "smallGrass", "fruit", "stone", "flowers", "",
-				"leftGrass", "middleGrass", "rightGrass", "rightDown_FullGrass", "leftDown_FullGrass", "", "", "", "", "", "",  "", "",
-				"", "", "", "", "", "",  "", "", "", "", "", "", "",
+				"leftGrass", "middleGrass", "rightGrass", "rightDownDirt", "leftDownDirt", "", "", "", "", "", "",  "", "",
+				"leftDownGrass", "middleDownGrass", "rightDownGrass", "rightUpGrass", "leftUpDirt", "",  "", "", "", "", "", "", "",
 				"", "", "", "", "", "",  "", "", "", "", "", "", "",
 				"", "", "", "", "", "",  "", "", "", "", "", "", "",
 				"", "", "", "", "", "",  "", "", "", "", "", "", "",
@@ -28,102 +28,293 @@
 		
 		{
 			"name": "playerTextureAtlas",
-			"filePath": "res/textures/player_1.png",
+			"filePath": "res/textures/player.png",
 			"subTextureWidth": 16,
 			"subTextureHeight": 22,
 			"subTextures": [
 				"playerRight1", "playerRight2", "playerRight3", "playerRight4",
 				"playerRight5", "playerRight6", "playerRight7", "playerRight8",
 				"playerLeft1", "playerLeft2", "playerLeft3", "playerLeft4",
-				"playerLeft5", "playerLeft6", "playerLeft7", "playerLeft8"
+				"playerLeft5", "playerLeft6", "playerLeft7", "playerLeft8",
+				"playerBottom1", "playerBottom2", "playerBottom3", "playerBottom4",
+				"playerBottom5", "playerBottom6", "playerBottom7", "playerBottom8",
+				"playerTop1", "playerTop2", "playerTop3", "playerTop4",
+				"playerTop5", "playerTop6", "playerTop7", "playerTop8"
 			]
 		}
 	],
 	
-	"animatedSprites": [
-	{
-		"name": "playerAnimatedSprite",
-		"textureAtlas": "playerTextureAtlas",
-		"shader": "spriteShader",
-		"initialWidth": 48,
-		"initialHeight": 66,
-		"initialSubTexture": "playerRight1",
-		"states": [
-			{
-				"stateName": "playerRightState",
-				"frames": [
-					{
-						"subTexture": "playerRight1",
-						"duration": 250000000
-					}, 
-					{
-						"subTexture": "playerRight2",
-						"duration": 250000000
-					}, 
-					{
-						"subTexture": "playerRight3",
-						"duration": 250000000
-					}, 
-					{
-						"subTexture": "playerRight4",
-						"duration": 250000000
-					}, 
-					{
-						"subTexture": "playerRight5",
-						"duration": 250000000
-					}, 
-					{
-						"subTexture": "playerRight6",
-						"duration": 250000000
-					}, 
-					{
-						"subTexture": "playerRight7",
-						"duration": 250000000
-					}, 
-					{
-						"subTexture": "playerRight8",
-						"duration": 250000000
-					}
-				]
-			},
-			{
-				"stateName": "playerLeftState",
-				"frames": [
-					{
-						"subTexture": "playerLeft1",
-						"duration": 250000000
-					}, 
-					{
-						"subTexture": "playerLeft2",
-						"duration": 250000000
-					}, 
-					{
-						"subTexture": "playerLeft3",
-						"duration": 250000000
-					}, 
-					{
-						"subTexture": "playerLeft4",
-						"duration": 250000000
-					}, 
-					{
-						"subTexture": "playerLeft5",
-						"duration": 250000000
-					}, 
-					{
-						"subTexture": "playerLeft6",
-						"duration": 250000000
-					}, 
-					{
-						"subTexture": "playerLeft7",
-						"duration": 250000000
-					}, 
-					{
-						"subTexture": "playerLeft8",
-						"duration": 250000000
-					}
-				]
-			}
-		]
-	}
+	"sprites": [
+		{
+			"name": "leftTopGrass",
+			"textureAtlas": "mapTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "leftTopGrass"
+		},
+		
+		{
+			"name": "middleTopGrass",
+			"textureAtlas": "mapTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "middleTopGrass"
+		},
+		
+		{
+			"name": "rightTopGrass",
+			"textureAtlas": "mapTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "rightTopGrass"
+		},
+		
+		{
+			"name": "leftGrass",
+			"textureAtlas": "mapTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "leftGrass"
+		},
+		
+		{
+			"name": "middleGrass",
+			"textureAtlas": "mapTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "middleGrass"
+		},
+		
+		{
+			"name": "rightGrass",
+			"textureAtlas": "mapTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "rightGrass"
+		},
+		
+		{
+			"name": "leftDownGrass",
+			"textureAtlas": "mapTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "leftDownGrass"
+		},
+		
+		{
+			"name": "middleDownGrass",
+			"textureAtlas": "mapTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "middleDownGrass"
+		},
+		
+		{
+			"name": "rightDownGrass",
+			"textureAtlas": "mapTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "rightDownGrass"
+		},
+		
+		{
+			"name": "rightDownGrass",
+			"textureAtlas": "mapTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "rightDownGrass"
+		},
+		
+		{
+			"name": "leftDownDirt",
+			"textureAtlas": "mapTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "leftDownDirt"
+		},
+		
+		{
+			"name": "rightUpGrass",
+			"textureAtlas": "mapTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "rightUpGrass"
+		},
+		
+		{
+			"name": "leftUpDirt",
+			"textureAtlas": "mapTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "leftUpDirt"
+		},
+		
+		{
+			"name": "playerSprite_top",
+			"textureAtlas": "playerTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "playerTop1",
+			"frames": [
+				{
+					"subTexture": "playerTop1",
+					"duration": 250000000
+				}, 
+				{
+					"subTexture": "playerTop2",
+					"duration": 250000000
+				}, 
+				{
+					"subTexture": "playerTop3",
+					"duration": 250000000
+				}, 
+				{
+					"subTexture": "playerTop4",
+					"duration": 250000000
+				}, 
+				{
+					"subTexture": "playerTop5",
+					"duration": 250000000
+				}, 
+				{
+					"subTexture": "playerTop6",
+					"duration": 250000000
+				}, 
+				{
+					"subTexture": "playerTop7",
+					"duration": 250000000
+				}, 
+				{
+					"subTexture": "playerTop8",
+					"duration": 250000000
+				}
+			]
+		},			
+		
+		{
+			"name": "playerSprite_bottom",
+			"textureAtlas": "playerTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "playerBottom1",
+			"frames": [
+				{
+					"subTexture": "playerBottom1",
+					"duration": 250000000
+				}, 
+				{
+					"subTexture": "playerBottom2",
+					"duration": 250000000
+				}, 
+				{
+					"subTexture": "playerBottom3",
+					"duration": 250000000
+				}, 
+				{
+					"subTexture": "playerBottom4",
+					"duration": 250000000
+				}, 
+				{
+					"subTexture": "playerBottom5",
+					"duration": 250000000
+				}, 
+				{
+					"subTexture": "playerBottom6",
+					"duration": 250000000
+				}, 
+				{
+					"subTexture": "playerBottom7",
+					"duration": 250000000
+				}, 
+				{
+					"subTexture": "playerBottom8",
+					"duration": 250000000
+				}
+			]
+		},
+		
+		{
+			"name": "playerSprite_left",
+			"textureAtlas": "playerTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "playerLeft1",
+			"frames": [
+				{
+					"subTexture": "playerLeft1",
+					"duration": 250000000
+				}, 
+				{
+					"subTexture": "playerLeft2",
+					"duration": 250000000
+				}, 
+				{
+					"subTexture": "playerLeft3",
+					"duration": 250000000
+				}, 
+				{
+					"subTexture": "playerLeft4",
+					"duration": 250000000
+				}, 
+				{
+					"subTexture": "playerLeft5",
+					"duration": 250000000
+				}, 
+				{
+					"subTexture": "playerLeft6",
+					"duration": 250000000
+				}, 
+				{
+					"subTexture": "playerLeft7",
+					"duration": 250000000
+				}, 
+				{
+					"subTexture": "playerLeft8",
+					"duration": 250000000
+				}
+			]
+		},
+		
+		{
+			"name": "playerSprite_right",
+			"textureAtlas": "playerTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "playerRight1",
+			"frames": [
+				{
+					"subTexture": "playerRight1",
+					"duration": 250000000
+				}, 
+				{
+					"subTexture": "playerRight2",
+					"duration": 250000000
+				}, 
+				{
+					"subTexture": "playerRight3",
+					"duration": 250000000
+				}, 
+				{
+					"subTexture": "playerRight4",
+					"duration": 250000000
+				}, 
+				{
+					"subTexture": "playerRight5",
+					"duration": 250000000
+				}, 
+				{
+					"subTexture": "playerRight6",
+					"duration": 250000000
+				}, 
+				{
+					"subTexture": "playerRight7",
+					"duration": 250000000
+				}, 
+				{
+					"subTexture": "playerRight8",
+					"duration": 250000000
+				}
+			]
+		}
+	],
+	
+	"levels": [
+		{
+			"description": [
+				"0111111112",
+				"3444444445",
+				"3444444445",
+				"3444444445",
+				"3444444445",
+				"3444444445",
+				"3444444445",
+				"3444444445",
+				"3444444445",
+				"6777777778"
+			]
+		}
 	]
 }
