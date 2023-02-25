@@ -47,6 +47,8 @@ public:
 
 	static const std::vector<std::vector<std::string>>& getLevels() { return m_levels; };
 
+	static std::string toString(unsigned int val);
+
 private:
 	static std::string getFileString(const std::string& relativeFilePath);
 
@@ -62,4 +64,6 @@ private:
 	static std::vector<std::vector<std::string>> m_levels;
 
 	static std::string m_path;
+
+	static unsigned int countLayers;
 };

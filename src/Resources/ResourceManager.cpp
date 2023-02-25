@@ -21,6 +21,13 @@ ResourceManager::SpritesMap ResourceManager::m_sprites;
 std::string ResourceManager::m_path;
 std::vector<std::vector<std::string>> ResourceManager::m_levels;
 
+std::string ResourceManager::toString(unsigned int val)
+{
+	std::ostringstream oss;
+	oss << val;
+	return oss.str();
+}
+
 void ResourceManager::setExecutablePath(const std::string& executablePath) {
 	size_t found = executablePath.find_last_of("/\\");
 	m_path = executablePath.substr(0, found);
@@ -231,17 +238,31 @@ bool ResourceManager::loadJSONResources(const std::string& JSONPath) {
 	}
 
 	auto levelsIt = document.FindMember("levels");
-	if (levelsIt != document.MemberEnd()) {
-		for (const auto& currentLevel : levelsIt->value.GetArray()) {
+	if (levelsIt != document.MemberEnd())
+	{
+		for (const auto& currentLevel : levelsIt->value.GetArray())
+		{
 			const auto description = currentLevel["description"].GetArray();
 			std::vector<std::string> levelRows;
 			levelRows.reserve(description.Size());
-			for (const auto& currentRow : description) {
+			size_t maxLength = 0;
+			for (const auto& currentRow : description)
+			{
 				levelRows.emplace_back(currentRow.GetString());
+				if (maxLength < levelRows.back().length())
+				{
+					maxLength = levelRows.back().length();
+				}
 			}
 
+			for (auto& currentRow : levelRows)
+			{
+				while (currentRow.length() < maxLength)
+				{
+					currentRow.append("4");
+				}
+			}
 			m_levels.emplace_back(std::move(levelRows));
-
 		}
 	}
 

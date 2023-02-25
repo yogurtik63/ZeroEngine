@@ -14,15 +14,16 @@
 			"subTextureWidth": 16,
 			"subTextureHeight": 16,
 			"subTextures": [
-				"leftTopGrass", "middleTopGrass", "rightTopGrass", "leftDown_rightTopGrass", "leftTopCorner_rightDownGrass", "dirt1", "dirt2", "dirt3", "smallGrass", "fruit", "stone", "flowers", "",
-				"leftGrass", "middleGrass", "rightGrass", "rightDownDirt", "leftDownDirt", "", "", "", "", "", "",  "", "",
-				"leftDownGrass", "middleDownGrass", "rightDownGrass", "rightUpGrass", "leftUpDirt", "",  "", "", "", "", "", "", "",
-				"", "", "", "", "", "",  "", "", "", "", "", "", "",
-				"", "", "", "", "", "",  "", "", "", "", "", "", "",
-				"", "", "", "", "", "",  "", "", "", "", "", "", "",
-				"", "", "", "", "", "",  "", "", "", "", "", "", "",
-				"", "", "", "", "", "",  "", "", "", "", "", "", "",
-				"rightChicken_1", "rightChicken_2", "rightChicken_3", "rightChicken_4"
+				"leftTopGrass",  "middleTopGrass",  "rightTopGrass",  "leftDown_rightTopGrass", "leftTopCorner_rightDownGrass", "dirt1", "dirt2", "dirt3", "smallGrass", "fruit", "stone", "flowers", "empty",
+				"leftGrass",     "middleGrass",     "rightGrass",     "rightDownDirt",          "leftDownDirt", "", "", "", "", "", "",  "", "",
+				"leftDownGrass", "middleDownGrass", "rightDownGrass", "rightUpGrass", 			"leftUpDirt", "",  "", "", "", "", "", "", "",
+				"", "", "", "", "", "",  "", "", "", "t1", "t2", "empty", "empty",
+				"", "", "", "", "", "",  "", "", "", "t3", "t4", "empty", "empty",
+				"", "", "", "", "", "",  "", "", "", "empty", "empty", "empty", "empty",
+				"", "", "", "", "", "",  "", "", "", "empty", "empty", "empty", "empty",
+				"", "", "", "", "", "",  "", "", "", "empty", "empty", "empty", "empty",
+				"rightChicken_1", "rightChicken_2", "rightChicken_3", "rightChicken_4", "potatoSeedPack", "potatoSeed",  "potatoGrowth_0", "potatoGrowth_1", "potatoGrowth_2", "potatoGrowth_3", "potatoGrowth_4", "potatoReady", "empty",
+				"leftChicken_1",  "leftChicken_2",  "leftChicken_3",  "leftChicken_4",  "tomatoSeedPack", "tomatoSeed",  "tomatoGrowth_0", "tomatoGrowth_1", "tomatoGrowth_2", "tomatoGrowth_3", "tomatoGrowth_4", "tomatoReady", "empty"
 			]
 		},
 		
@@ -41,10 +42,27 @@
 				"playerTop1", "playerTop2", "playerTop3", "playerTop4",
 				"playerTop5", "playerTop6", "playerTop7", "playerTop8"
 			]
+		},
+		
+		{
+			"name": "treesAtlas",
+			"filePath": "res/textures/trees.png",
+			"subTextureWidth": 32,
+			"subTextureHeight": 32,
+			"subTextures": [
+				"tree1", "tree2"
+			]
 		}
 	],
 	
 	"sprites": [
+		{
+			"name": "tree1",
+			"textureAtlas": "treesAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "tree1"
+		},
+		
 		{
 			"name": "leftTopGrass",
 			"textureAtlas": "mapTextureAtlas",
@@ -302,14 +320,14 @@
 	],
 	
 	"levels": [
-		{
-			"description": [
+	{
+		"description": [
 				"0111111112",
 				"3444444445",
 				"3444444445",
 				"3444444445",
 				"3444444445",
-				"3444444445",
+				"34444TE445",
 				"3444444445",
 				"3444444445",
 				"3444444445",

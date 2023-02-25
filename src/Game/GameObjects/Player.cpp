@@ -1,19 +1,17 @@
 #include "Player.h"
+
+#include "../../Resources/ResourceManager.h"
 #include "../../Renderer/Sprite.h"
 
-Player::Player(std::shared_ptr<RenderEngine::Sprite> pSprite_top,
-			   std::shared_ptr<RenderEngine::Sprite> pSprite_bottom,
-			   std::shared_ptr<RenderEngine::Sprite> pSprite_left,
-			   std::shared_ptr<RenderEngine::Sprite> pSprite_right,
-			   const float velocity,
+Player::Player(const float velocity,
 			   const glm::vec2& position,
 			   const glm::vec2& size)
 	: IGameObject(position, size, 0.f)
 	, m_eOrientation(EOrintation::Top)
-	, m_pSprite_top(std::move(pSprite_top))
-	, m_pSprite_bottom(std::move(pSprite_bottom))
-	, m_pSprite_left(std::move(pSprite_left))
-	, m_pSprite_right(std::move(pSprite_right))
+	, m_pSprite_top(ResourceManager::getSprite("playerSprite_top"))
+	, m_pSprite_bottom(ResourceManager::getSprite("playerSprite_bottom"))
+	, m_pSprite_left(ResourceManager::getSprite("playerSprite_left"))
+	, m_pSprite_right(ResourceManager::getSprite("playerSprite_right"))
 
 	, m_spriteAnimator_top(m_pSprite_top)
 	, m_spriteAnimator_bottom(m_pSprite_bottom)

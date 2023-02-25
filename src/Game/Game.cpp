@@ -77,30 +77,13 @@ bool Game::init() {
         return false;
     }
 
-    auto pTextureAtlas = ResourceManager::getTexture("mapTextureAtlas");
-    if (!pTextureAtlas) {
-        std::cerr << "Can't find texture atlas" << "mapTextureAtlas" << std::endl;
-        return false;
-    }
-
-    auto pPlayerTextureAtlas = ResourceManager::getTexture("playerTextureAtlas");
-    if (!pPlayerTextureAtlas) {
-        std::cerr << "Can't find texture atlas" << "playerTextureAtlas" << std::endl;
-        return false;
-    }
-
     glm::mat4 projectionMatrix = glm::ortho(0.f, static_cast<float>(m_windowSize.x), 0.f, static_cast<float>(m_windowSize.y), -100.f, 100.f);
 
     pSpriteShaderProgram->use();
     pSpriteShaderProgram->setInt("tex", 0);
     pSpriteShaderProgram->setMatrix4("projectionMat", projectionMatrix);
 
-    m_pPlayer = std::make_unique<Player>(
-        ResourceManager::getSprite("playerSprite_top"),
-        ResourceManager::getSprite("playerSprite_bottom"),
-        ResourceManager::getSprite("playerSprite_left"),
-        ResourceManager::getSprite("playerSprite_right"),
-        0.00000005f, glm::vec2(16.f, 22.f), glm::vec2(16.f, 22.f));
+    m_pPlayer = std::make_unique<Player>(0.00000005f, glm::vec2(16.f, 22.f), glm::vec2(16.f, 22.f));
     m_pLevel = std::make_unique<Level>(ResourceManager::getLevels()[0]);
 
     return true;

@@ -2,6 +2,7 @@
 
 #include "../Resources/ResourceManager.h"
 #include "GameObjects/Grass.h"
+#include "GameObjects/Tree.h"
 
 #include <iostream>
 
@@ -37,6 +38,13 @@ std::shared_ptr<IGameObject> createGameObjectFromDescription(const char descript
 		return std::make_shared<Grass>(ResourceManager::getSprite("rightUpGrass"), position, size, rotation);
 	case 'c':
 		return std::make_shared<Grass>(ResourceManager::getSprite("leftUpDirt"), position, size, rotation);
+
+	case 'T':
+		return std::make_shared<Tree>(ResourceManager::getSprite("tree1"), position, size, rotation);
+
+	case 'E':
+		return nullptr;
+
 	default:
 		std::cerr << "Unknown GameObject description: " << description << std::endl;
 	}

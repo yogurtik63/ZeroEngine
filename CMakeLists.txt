@@ -37,6 +37,8 @@ add_executable(${PROJECT_NAME}
 	src/Game/GameObjects/Player.h
 	src/Game/GameObjects/Grass.cpp
 	src/Game/GameObjects/Grass.h
+	src/Game/GameObjects/Tree.cpp
+	src/Game/GameObjects/Tree.h
 	src/Game/GameObjects/IGameObject.cpp
 	src/Game/GameObjects/IGameObject.h
 )
