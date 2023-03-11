@@ -5,8 +5,9 @@
 
 Player::Player(const float velocity,
 			   const glm::vec2& position,
-			   const glm::vec2& size)
-	: IGameObject(position, size, 0.f)
+			   const glm::vec2& size,
+				const float layer)
+	: IGameObject(position, size, 0.f, layer)
 	, m_eOrientation(EOrintation::Top)
 	, m_pSprite_top(ResourceManager::getSprite("playerSprite_top"))
 	, m_pSprite_bottom(ResourceManager::getSprite("playerSprite_bottom"))
@@ -21,6 +22,8 @@ Player::Player(const float velocity,
 	, m_move(false)
 	, m_velocity(velocity)
 	, m_moveOffset(glm::vec2(0.1f, 1.f))
+
+	, m_position(position)
 {
 }
 
@@ -28,16 +31,16 @@ void Player::render() const {
 	switch (m_eOrientation)
 	{
 	case Player::EOrintation::Top:
-		m_pSprite_top->render(m_position, m_size, m_rotation, m_spriteAnimator_top.getCurrentFrame());
+		m_pSprite_top->render(m_position, m_size, m_rotation, m_layer, m_spriteAnimator_top.getCurrentFrame());
 		break;
 	case Player::EOrintation::Bottom:
-		m_pSprite_bottom->render(m_position, m_size, m_rotation, m_spriteAnimator_bottom.getCurrentFrame());
+		m_pSprite_bottom->render(m_position, m_size, m_rotation, m_layer, m_spriteAnimator_bottom.getCurrentFrame());
 		break;
 	case Player::EOrintation::Left:
-		m_pSprite_left->render(m_position, m_size, m_rotation, m_spriteAnimator_left.getCurrentFrame());
+		m_pSprite_left->render(m_position, m_size, m_rotation, m_layer, m_spriteAnimator_left.getCurrentFrame());
 		break;
 	case Player::EOrintation::Right:
-		m_pSprite_right->render(m_position, m_size, m_rotation, m_spriteAnimator_right.getCurrentFrame());
+		m_pSprite_right->render(m_position, m_size, m_rotation, m_layer, m_spriteAnimator_right.getCurrentFrame());
 		break;
 	}
 }

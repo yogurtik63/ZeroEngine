@@ -21,12 +21,14 @@ public:
 
 	Player(const float velocity, 
 		const glm::vec2& position, 
-		const glm::vec2& size);
+		const glm::vec2& size,
+		const float layer);
 
 	void render() const override;
 	void setOrientation(const EOrintation eOrintation);
 	void move(const bool move);
 	void update(const uint64_t delta) override;
+	glm::vec2 getPosition() { return m_position; }
 
 private:
 	EOrintation m_eOrientation;
@@ -43,5 +45,5 @@ private:
 	bool m_move;
 	float m_velocity;
 	glm::vec2 m_moveOffset;
-	
+	glm::vec2 m_position;
 };

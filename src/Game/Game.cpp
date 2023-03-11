@@ -83,7 +83,7 @@ bool Game::init() {
     pSpriteShaderProgram->setInt("tex", 0);
     pSpriteShaderProgram->setMatrix4("projectionMat", projectionMatrix);
 
-    m_pPlayer = std::make_unique<Player>(0.00000005f, glm::vec2(16.f, 22.f), glm::vec2(16.f, 22.f));
+    m_pPlayer = std::make_unique<Player>(0.00000005f, glm::vec2(16.f, 22.f), glm::vec2(16.f, 22.f), 1.f);
     m_pLevel = std::make_unique<Level>(ResourceManager::getLevels()[0]);
 
     return true;

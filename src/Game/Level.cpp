@@ -8,42 +8,47 @@
 
 const unsigned int BLOCK_SIZE = 16;
 
-std::shared_ptr<IGameObject> createGameObjectFromDescription(const char description, glm::vec2& position, const glm::vec2& size, const float rotation) {
+std::shared_ptr<IGameObject> Level::createGameObjectFromDescription(const char description, glm::vec2& position, const glm::vec2& size, const float rotation) {
 	switch (description)
 	{
 	case '0':
-		return std::make_shared<Grass>(ResourceManager::getSprite("leftTopGrass"), position, size, rotation);
+		return std::make_shared<Grass>(ResourceManager::getSprite("leftTopGrass"), position, size, rotation, 0.f);
 	case '1':
-		return std::make_shared<Grass>(ResourceManager::getSprite("middleTopGrass"), position, size, rotation);
+		return std::make_shared<Grass>(ResourceManager::getSprite("middleTopGrass"), position, size, rotation, 0.f);
 	case '2':
-		return std::make_shared<Grass>(ResourceManager::getSprite("rightTopGrass"), position, size, rotation);
+		return std::make_shared<Grass>(ResourceManager::getSprite("rightTopGrass"), position, size, rotation, 0.f);
 	case '3':
-		return std::make_shared<Grass>(ResourceManager::getSprite("leftGrass"), position, size, rotation);
+		return std::make_shared<Grass>(ResourceManager::getSprite("leftGrass"), position, size, rotation, 0.f);
 	case '4':
-		return std::make_shared<Grass>(ResourceManager::getSprite("middleGrass"), position, size, rotation);
+		return std::make_shared<Grass>(ResourceManager::getSprite("middleGrass"), position, size, rotation, 0.f);
 	case '5':
-		return std::make_shared<Grass>(ResourceManager::getSprite("rightGrass"), position, size, rotation);
+		return std::make_shared<Grass>(ResourceManager::getSprite("rightGrass"), position, size, rotation, 0.f);
 	case '6':
-		return std::make_shared<Grass>(ResourceManager::getSprite("leftDownGrass"), position, size, rotation);
+		return std::make_shared<Grass>(ResourceManager::getSprite("leftDownGrass"), position, size, rotation, 0.f);
 	case '7':
-		return std::make_shared<Grass>(ResourceManager::getSprite("middleDownGrass"), position, size, rotation);
+		return std::make_shared<Grass>(ResourceManager::getSprite("middleDownGrass"), position, size, rotation, 0.f);
 	case '8':
-		return std::make_shared<Grass>(ResourceManager::getSprite("rightDownGrass"), position, size, rotation);
+		return std::make_shared<Grass>(ResourceManager::getSprite("rightDownGrass"), position, size, rotation, 0.f);
 
 	case '9':
-		return std::make_shared<Grass>(ResourceManager::getSprite("rightDownDirt"), position, size, rotation);
+		return std::make_shared<Grass>(ResourceManager::getSprite("rightDownDirt"), position, size, rotation, 0.f);
 	case 'a':
-		return std::make_shared<Grass>(ResourceManager::getSprite("leftDownDirt"), position, size, rotation);
+		return std::make_shared<Grass>(ResourceManager::getSprite("leftDownDirt"), position, size, rotation, 0.f);
 	case 'b':
-		return std::make_shared<Grass>(ResourceManager::getSprite("rightUpGrass"), position, size, rotation);
+		return std::make_shared<Grass>(ResourceManager::getSprite("rightUpGrass"), position, size, rotation, 0.f);
 	case 'c':
-		return std::make_shared<Grass>(ResourceManager::getSprite("leftUpDirt"), position, size, rotation);
+		return std::make_shared<Grass>(ResourceManager::getSprite("leftUpDirt"), position, size, rotation, 0.f);
 
 	case 'T':
-		return std::make_shared<Tree>(ResourceManager::getSprite("tree1"), position, size, rotation);
+		m_mapObjects.emplace_back(createGameObjectFromDescription('4', position, size, rotation));
+		return std::make_shared<Tree>(ResourceManager::getSprite("tree1"), position, size, rotation, 2.f);
 
 	case 'E':
-		return nullptr;
+		return std::make_shared<Grass>(ResourceManager::getSprite("middleGrass"), position, size, rotation, 0.f);
+		// return nullptr;
+	case 'H':
+		return std::make_shared<Grass>(ResourceManager::getSprite("middleGrass"), position, size, rotation, 0.f);
+		// return nullptr;
 
 	default:
 		std::cerr << "Unknown GameObject description: " << description << std::endl;
