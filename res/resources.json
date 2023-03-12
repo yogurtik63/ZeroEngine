@@ -23,7 +23,7 @@
 				"", "", "", "", "", "",  "", "", "", "empty", "empty", "empty", "empty",
 				"", "", "", "", "", "",  "", "", "", "empty", "empty", "empty", "empty",
 				"rightChicken_1", "rightChicken_2", "rightChicken_3", "rightChicken_4", "potatoSeedPack", "potatoSeed",  "potatoGrowth_0", "potatoGrowth_1", "potatoGrowth_2", "potatoGrowth_3", "potatoGrowth_4", "potatoReady", "empty",
-				"leftChicken_1",  "leftChicken_2",  "leftChicken_3",  "leftChicken_4",  "tomatoSeedPack", "tomatoSeed",  "tomatoGrowth_0", "tomatoGrowth_1", "tomatoGrowth_2", "tomatoGrowth_3", "tomatoGrowth_4", "tomatoReady", "empty"
+				"leftChicken_1",  "leftChicken_2",  "leftChicken_3",  "leftChicken_4",  "tomatoSeedPack", "tomatoSeed",  "tomatoGrowth_0", "tomatoGrowth_1", "tomatoGrowth_2", "tomatoGrowth_3", "tomatoGrowth_4", "tomatoReady", "border"
 			]
 		},
 		
@@ -152,6 +152,13 @@
 			"textureAtlas": "mapTextureAtlas",
 			"shader": "spriteShader",
 			"initialSubTexture": "leftUpDirt"
+		},
+		
+		{
+			"name": "border",
+			"textureAtlas": "mapTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "border"
 		},
 		
 		{
@@ -320,8 +327,8 @@
 	],
 	
 	"levels": [
-	{
-		"description": [
+		{
+			"description": [
 				"0111111112",
 				"3444444445",
 				"344444TE45",
@@ -330,8 +337,40 @@
 				"3EEEE44445",
 				"3EEEE44445",
 				"3HEEE44445",
+				"344444R445",
+				"6777777778"
+			]
+		},
+		{
+			"description": [
+				"0111111112",
+				"3444444445",
+				"3444444445",
+				"34T4444T45",
+				"3444444445",
+				"3444444445",
+				"3T4444T445",
+				"3444444445",
+				"3444444445",
+				"3444444445",
+				"3444444T45",
+				"34T4444445",
 				"3444444445",
 				"6777777778"
+			]
+		},
+		
+		{
+			"description": [
+				"0111111111111111112",
+				"34444T4444444444445",
+				"3444444444444444445",
+				"34T4444T444T4444T45",
+				"34444444444444T4445",
+				"3444444444444444445",
+				"3T4444T444T4444T445",
+				"3444444444444444445",
+				"6777777777777777778"
 			]
 		}
 	]

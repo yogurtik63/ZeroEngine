@@ -3,10 +3,10 @@
 #include "../Resources/ResourceManager.h"
 #include "GameObjects/Grass.h"
 #include "GameObjects/Tree.h"
+#include "GameObjects/Border.h"
 
 #include <iostream>
 
-const unsigned int BLOCK_SIZE = 16;
 
 std::shared_ptr<IGameObject> Level::createGameObjectFromDescription(const char description, glm::vec2& position, const glm::vec2& size, const float rotation) {
 	switch (description)
@@ -64,23 +64,59 @@ Level::Level(const std::vector<std::string>& levelDescription) {
 	m_width = levelDescription[0].length();
 	m_height = levelDescription.size();
 
-	m_mapObjects.reserve(m_width * m_height);
-	unsigned int currentBottomOffset = static_cast<unsigned int>(BLOCK_SIZE * (m_height - 1));
+	m_playerRespawn = { (m_width / 2 - 0.5f) * BLOCK_SIZE, BLOCK_SIZE * 2 };
+
+	m_mapObjects.reserve(m_width * m_height + 4);
+	unsigned int currentBottomOffset = static_cast<unsigned int>(BLOCK_SIZE * (m_height - 1) + BLOCK_SIZE);
 
 	for (const std::string& currentRow : levelDescription) {
-		unsigned int currentLeftOffset = 0;
+		unsigned int currentLeftOffset = BLOCK_SIZE / 2.f;
 
 		for (const char currentElement : currentRow) {
-			m_mapObjects.emplace_back(createGameObjectFromDescription(
-				currentElement, 
-				glm::vec2(currentLeftOffset, currentBottomOffset), 
-				glm::vec2(BLOCK_SIZE, BLOCK_SIZE), 0.f));
+			switch (currentElement)
+			{
+			case 'R':
+				m_mapObjects.emplace_back(createGameObjectFromDescription('4', 
+					glm::vec2(currentLeftOffset, currentBottomOffset),
+					glm::vec2(BLOCK_SIZE, BLOCK_SIZE), 0.f));
+				m_playerRespawn = { currentLeftOffset, currentBottomOffset };
+				break;
+			default:
+				m_mapObjects.emplace_back(createGameObjectFromDescription(
+					currentElement,
+					glm::vec2(currentLeftOffset, currentBottomOffset),
+					glm::vec2(BLOCK_SIZE, BLOCK_SIZE), 0.f));
+			}
 
 			currentLeftOffset += BLOCK_SIZE;
 		}
 
 		currentBottomOffset -= BLOCK_SIZE;
 	}
+
+	// bottom border
+	m_mapObjects.emplace_back(std::make_shared<Border>(
+		glm::vec2(BLOCK_SIZE / 2.f, 0.f),
+		glm::vec2(m_width * BLOCK_SIZE, BLOCK_SIZE * 2.f), 
+		0.f, 0.f));
+
+	// top border
+	m_mapObjects.emplace_back(std::make_shared<Border>(
+		glm::vec2(0.f, m_height * BLOCK_SIZE + BLOCK_SIZE),
+		glm::vec2((m_width + 1) * BLOCK_SIZE, BLOCK_SIZE / 2.f),
+		0.f, 0.f));
+
+	// left border
+	m_mapObjects.emplace_back(std::make_shared<Border>(
+		glm::vec2(0.f, 0.f),
+		glm::vec2(BLOCK_SIZE / 2.f, (m_height + 1) * BLOCK_SIZE), 
+		0.f, 0.f));
+
+	// right border
+	m_mapObjects.emplace_back(std::make_shared<Border>(
+		glm::vec2(m_width * BLOCK_SIZE + BLOCK_SIZE / 2.f, 0.f),
+		glm::vec2(BLOCK_SIZE / 2.f, (m_height + 1) * BLOCK_SIZE), 
+		0.f, 0.f));
 }
 
 void Level::render() const {
@@ -97,4 +133,12 @@ void Level::update(const uint64_t delta) {
 			currentMapObject->update(delta);
 		}
 	}
+}
+
+size_t Level::getLevelWidth() const {
+	return (m_width + 1) * BLOCK_SIZE;
+}
+
+size_t Level::getLevelHeight() const {
+	return (m_height + 1.5f) * BLOCK_SIZE;
 }
