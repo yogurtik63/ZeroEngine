@@ -6,13 +6,13 @@ Grass::Grass(const std::shared_ptr<RenderEngine::Sprite> pSprite, glm::vec2& pos
 	: IGameObject(position, size, rotation, layer)
 	, m_pCurrentSprite(pSprite)
 {
-
+	setName("grass");
 }
 
 void Grass::render() const {
 	m_pCurrentSprite->render(m_position, m_size, m_rotation, m_layer);
 }
 
-void Grass::update(const uint64_t delta) {
+void Grass::update(const double delta) {
 
 }

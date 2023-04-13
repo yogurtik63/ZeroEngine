@@ -1,32 +1,29 @@
 {
-	"shaders": [
-		{
-			"name": "spriteShader",
-			"filePath_v": "res/shaders/vSprite.txt",
-			"filePath_f": "res/shaders/fSprite.txt"
-		}
-	],
-	
-	"textureAtlases": [
-		{
+	"shaders": [{
+		"name": "spriteShader",
+		"filePath_v": "res/shaders/vSprite.txt",
+		"filePath_f": "res/shaders/fSprite.txt"
+	}],
+
+	"textureAtlases": [{
 			"name": "mapTextureAtlas",
 			"filePath": "res/textures/map_13x10.png",
 			"subTextureWidth": 16,
 			"subTextureHeight": 16,
 			"subTextures": [
-				"leftTopGrass",  "middleTopGrass",  "rightTopGrass",  "leftDown_rightTopGrass", "leftTopCorner_rightDownGrass", "dirt1", "dirt2", "dirt3", "smallGrass", "fruit", "stone", "flowers", "empty",
-				"leftGrass",     "middleGrass",     "rightGrass",     "rightDownDirt",          "leftDownDirt", "", "", "", "", "", "",  "", "",
-				"leftDownGrass", "middleDownGrass", "rightDownGrass", "rightUpGrass", 			"leftUpDirt", "",  "", "", "", "", "", "", "",
-				"", "", "", "", "", "",  "", "", "", "t1", "t2", "empty", "empty",
-				"", "", "", "", "", "",  "", "", "", "t3", "t4", "empty", "empty",
-				"", "", "", "", "", "",  "", "", "", "empty", "empty", "empty", "empty",
-				"", "", "", "", "", "",  "", "", "", "empty", "empty", "empty", "empty",
-				"", "", "", "", "", "",  "", "", "", "empty", "empty", "empty", "empty",
-				"rightChicken_1", "rightChicken_2", "rightChicken_3", "rightChicken_4", "potatoSeedPack", "potatoSeed",  "potatoGrowth_0", "potatoGrowth_1", "potatoGrowth_2", "potatoGrowth_3", "potatoGrowth_4", "potatoReady", "empty",
-				"leftChicken_1",  "leftChicken_2",  "leftChicken_3",  "leftChicken_4",  "tomatoSeedPack", "tomatoSeed",  "tomatoGrowth_0", "tomatoGrowth_1", "tomatoGrowth_2", "tomatoGrowth_3", "tomatoGrowth_4", "tomatoReady", "border"
+				"leftTopGrass", "middleTopGrass", "rightTopGrass", "leftDown_rightTopGrass", "leftTopCorner_rightDownGrass", "dirt1", "dirt2", "dirt3", "smallGrass", "fruit", "stone", "flowers", "log",
+				"leftGrass", "middleGrass", "rightGrass", "rightDownDirt", "leftDownDirt", "", "", "", "", "", "", "", "",
+				"leftDownGrass", "middleDownGrass", "rightDownGrass", "rightUpGrass", "leftUpDirt", "", "", "", "", "", "", "", "",
+				"", "", "", "", "", "", "", "", "", "t1", "t2", "empty_tile", "empty",
+				"", "", "", "", "", "", "", "", "", "t3", "t4", "empty", "empty",
+				"", "", "", "", "", "", "", "", "", "empty", "empty", "empty", "empty",
+				"", "", "", "", "", "", "", "", "", "empty", "empty", "empty", "empty",
+				"", "", "", "", "", "", "", "", "", "empty", "empty", "empty", "empty",
+				"rightChicken_1", "rightChicken_2", "rightChicken_3", "rightChicken_4", "potatoSeedPack", "potatoSeed", "potatoGrowth_0", "potatoGrowth_1", "potatoGrowth_2", "potatoGrowth_3", "potatoGrowth_4", "potatoReady", "empty",
+				"leftChicken_1", "leftChicken_2", "leftChicken_3", "leftChicken_4", "tomatoSeedPack", "tomatoSeed", "tomatoGrowth_0", "tomatoGrowth_1", "tomatoGrowth_2", "tomatoGrowth_3", "tomatoGrowth_4", "tomatoReady", "border"
 			]
 		},
-		
+
 		{
 			"name": "playerTextureAtlas",
 			"filePath": "res/textures/player.png",
@@ -43,7 +40,46 @@
 				"playerTop5", "playerTop6", "playerTop7", "playerTop8"
 			]
 		},
-		
+
+		{
+			"name": "playerUseTextureAtlas",
+			"filePath": "res/textures/playerUse.png",
+			"subTextureWidth": 16,
+			"subTextureHeight": 22,
+			"subTextures": [
+				"playerUseRight1", "playerUseRight2", "playerUseRight3", "playerUseRight4", "playerUseRight5",
+				"playerUseLeft1", "playerUseLeft2", "playerUseLeft3", "playerUseLeft4", "playerUseLeft5",
+				"playerUseBottom1", "playerUseBottom2", "playerUseBottom3", "playerUseBottom4", "playerUseBottom5",
+				"playerUseTop1", "playerUseTop2", "playerUseTop3", "playerUseTop4", "playerUseTop5"
+			]
+		},
+
+		{
+			"name": "axeUseTextureAtlas",
+			"filePath": "res/textures/axeUse.png",
+			"subTextureWidth": 26,
+			"subTextureHeight": 22,
+			"subTextures": [
+				"axeUseRight1", "axeUseRight2", "axeUseRight3", "axeUseRight4", "axeUseRight5",
+				"axeUseLeft1", "axeUseLeft2", "axeUseLeft3", "axeUseLeft4", "axeUseLeft5",
+				"axeUseBottom1", "axeUseBottom2", "axeUseBottom3", "axeUseBottom4", "axeUseBottom5",
+				"axeUseTop1", "axeUseTop2", "axeUseTop3", "axeUseTop4", "axeUseTop5"
+			]
+		},
+
+		{
+			"name": "pickaxeUseTextureAtlas",
+			"filePath": "res/textures/pickaxeUse.png",
+			"subTextureWidth": 26,
+			"subTextureHeight": 22,
+			"subTextures": [
+				"pickaxeUseRight1", "pickaxeUseRight2", "pickaxeUseRight3", "pickaxeUseRight4", "pickaxeUseRight5",
+				"pickaxeUseLeft1", "pickaxeUseLeft2", "pickaxeUseLeft3", "pickaxeUseLeft4", "pickaxeUseLeft5",
+				"pickaxeUseBottom1", "pickaxeUseBottom2", "pickaxeUseBottom3", "pickaxeUseBottom4", "pickaxeUseBottom5",
+				"pickaxeUseTop1", "pickaxeUseTop2", "pickaxeUseTop3", "pickaxeUseTop4", "pickaxeUseTop5"
+			]
+		},
+
 		{
 			"name": "treesAtlas",
 			"filePath": "res/textures/trees.png",
@@ -54,284 +90,636 @@
 			]
 		}
 	],
-	
+
 	"sprites": [
+		{
+			"name": "stone",
+			"textureAtlas": "mapTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "stone"
+		},
+		
+		{
+			"name": "empty_tile",
+			"textureAtlas": "mapTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "empty_tile"
+		},
+		
+		{
+			"name": "log",
+			"textureAtlas": "mapTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "log"
+		},
+		
 		{
 			"name": "tree1",
 			"textureAtlas": "treesAtlas",
 			"shader": "spriteShader",
 			"initialSubTexture": "tree1"
 		},
-		
+
 		{
 			"name": "leftTopGrass",
 			"textureAtlas": "mapTextureAtlas",
 			"shader": "spriteShader",
 			"initialSubTexture": "leftTopGrass"
 		},
-		
+
 		{
 			"name": "middleTopGrass",
 			"textureAtlas": "mapTextureAtlas",
 			"shader": "spriteShader",
 			"initialSubTexture": "middleTopGrass"
 		},
-		
+
 		{
 			"name": "rightTopGrass",
 			"textureAtlas": "mapTextureAtlas",
 			"shader": "spriteShader",
 			"initialSubTexture": "rightTopGrass"
 		},
-		
+
 		{
 			"name": "leftGrass",
 			"textureAtlas": "mapTextureAtlas",
 			"shader": "spriteShader",
 			"initialSubTexture": "leftGrass"
 		},
-		
+
 		{
 			"name": "middleGrass",
 			"textureAtlas": "mapTextureAtlas",
 			"shader": "spriteShader",
 			"initialSubTexture": "middleGrass"
 		},
-		
+
 		{
 			"name": "rightGrass",
 			"textureAtlas": "mapTextureAtlas",
 			"shader": "spriteShader",
 			"initialSubTexture": "rightGrass"
 		},
-		
+
 		{
 			"name": "leftDownGrass",
 			"textureAtlas": "mapTextureAtlas",
 			"shader": "spriteShader",
 			"initialSubTexture": "leftDownGrass"
 		},
-		
+
 		{
 			"name": "middleDownGrass",
 			"textureAtlas": "mapTextureAtlas",
 			"shader": "spriteShader",
 			"initialSubTexture": "middleDownGrass"
 		},
-		
+
 		{
 			"name": "rightDownGrass",
 			"textureAtlas": "mapTextureAtlas",
 			"shader": "spriteShader",
 			"initialSubTexture": "rightDownGrass"
 		},
-		
+
 		{
 			"name": "rightDownGrass",
 			"textureAtlas": "mapTextureAtlas",
 			"shader": "spriteShader",
 			"initialSubTexture": "rightDownGrass"
 		},
-		
+
 		{
 			"name": "leftDownDirt",
 			"textureAtlas": "mapTextureAtlas",
 			"shader": "spriteShader",
 			"initialSubTexture": "leftDownDirt"
 		},
-		
+
 		{
 			"name": "rightUpGrass",
 			"textureAtlas": "mapTextureAtlas",
 			"shader": "spriteShader",
 			"initialSubTexture": "rightUpGrass"
 		},
-		
+
 		{
 			"name": "leftUpDirt",
 			"textureAtlas": "mapTextureAtlas",
 			"shader": "spriteShader",
 			"initialSubTexture": "leftUpDirt"
 		},
-		
+
 		{
 			"name": "border",
 			"textureAtlas": "mapTextureAtlas",
 			"shader": "spriteShader",
 			"initialSubTexture": "border"
 		},
-		
+
 		{
 			"name": "playerSprite_top",
 			"textureAtlas": "playerTextureAtlas",
 			"shader": "spriteShader",
 			"initialSubTexture": "playerTop1",
-			"frames": [
-				{
+			"frames": [{
 					"subTexture": "playerTop1",
-					"duration": 250000000
-				}, 
+					"duration": 250
+				},
 				{
 					"subTexture": "playerTop2",
-					"duration": 250000000
-				}, 
+					"duration": 250
+				},
 				{
 					"subTexture": "playerTop3",
-					"duration": 250000000
-				}, 
+					"duration": 250
+				},
 				{
 					"subTexture": "playerTop4",
-					"duration": 250000000
-				}, 
+					"duration": 250
+				},
 				{
 					"subTexture": "playerTop5",
-					"duration": 250000000
-				}, 
+					"duration": 250
+				},
 				{
 					"subTexture": "playerTop6",
-					"duration": 250000000
-				}, 
+					"duration": 250
+				},
 				{
 					"subTexture": "playerTop7",
-					"duration": 250000000
-				}, 
+					"duration": 250
+				},
 				{
 					"subTexture": "playerTop8",
-					"duration": 250000000
+					"duration": 250
 				}
 			]
-		},			
-		
+		},
+
 		{
 			"name": "playerSprite_bottom",
 			"textureAtlas": "playerTextureAtlas",
 			"shader": "spriteShader",
 			"initialSubTexture": "playerBottom1",
-			"frames": [
-				{
+			"frames": [{
 					"subTexture": "playerBottom1",
-					"duration": 250000000
-				}, 
+					"duration": 250
+				},
 				{
 					"subTexture": "playerBottom2",
-					"duration": 250000000
-				}, 
+					"duration": 250
+				},
 				{
 					"subTexture": "playerBottom3",
-					"duration": 250000000
-				}, 
+					"duration": 250
+				},
 				{
 					"subTexture": "playerBottom4",
-					"duration": 250000000
-				}, 
+					"duration": 250
+				},
 				{
 					"subTexture": "playerBottom5",
-					"duration": 250000000
-				}, 
+					"duration": 250
+				},
 				{
 					"subTexture": "playerBottom6",
-					"duration": 250000000
-				}, 
+					"duration": 250
+				},
 				{
 					"subTexture": "playerBottom7",
-					"duration": 250000000
-				}, 
+					"duration": 250
+				},
 				{
 					"subTexture": "playerBottom8",
-					"duration": 250000000
+					"duration": 250
 				}
 			]
 		},
-		
+
 		{
 			"name": "playerSprite_left",
 			"textureAtlas": "playerTextureAtlas",
 			"shader": "spriteShader",
 			"initialSubTexture": "playerLeft1",
-			"frames": [
-				{
+			"frames": [{
 					"subTexture": "playerLeft1",
-					"duration": 250000000
-				}, 
+					"duration": 250
+				},
 				{
 					"subTexture": "playerLeft2",
-					"duration": 250000000
-				}, 
+					"duration": 250
+				},
 				{
 					"subTexture": "playerLeft3",
-					"duration": 250000000
-				}, 
+					"duration": 250
+				},
 				{
 					"subTexture": "playerLeft4",
-					"duration": 250000000
-				}, 
+					"duration": 250
+				},
 				{
 					"subTexture": "playerLeft5",
-					"duration": 250000000
-				}, 
+					"duration": 250
+				},
 				{
 					"subTexture": "playerLeft6",
-					"duration": 250000000
-				}, 
+					"duration": 250
+				},
 				{
 					"subTexture": "playerLeft7",
-					"duration": 250000000
-				}, 
+					"duration": 250
+				},
 				{
 					"subTexture": "playerLeft8",
-					"duration": 250000000
+					"duration": 250
 				}
 			]
 		},
-		
+
 		{
 			"name": "playerSprite_right",
 			"textureAtlas": "playerTextureAtlas",
 			"shader": "spriteShader",
 			"initialSubTexture": "playerRight1",
-			"frames": [
-				{
+			"frames": [{
 					"subTexture": "playerRight1",
-					"duration": 250000000
-				}, 
+					"duration": 250
+				},
 				{
 					"subTexture": "playerRight2",
-					"duration": 250000000
-				}, 
+					"duration": 250
+				},
 				{
 					"subTexture": "playerRight3",
-					"duration": 250000000
-				}, 
+					"duration": 250
+				},
 				{
 					"subTexture": "playerRight4",
-					"duration": 250000000
-				}, 
+					"duration": 250
+				},
 				{
 					"subTexture": "playerRight5",
-					"duration": 250000000
-				}, 
+					"duration": 250
+				},
 				{
 					"subTexture": "playerRight6",
-					"duration": 250000000
-				}, 
+					"duration": 250
+				},
 				{
 					"subTexture": "playerRight7",
-					"duration": 250000000
-				}, 
+					"duration": 250
+				},
 				{
 					"subTexture": "playerRight8",
-					"duration": 250000000
+					"duration": 250
+				}
+			]
+		},
+
+		{
+			"name": "playerUseSprite_top",
+			"textureAtlas": "playerUseTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "playerTop1",
+			"frames": [{
+					"subTexture": "playerUseTop1",
+					"duration": 150
+				},
+				{
+					"subTexture": "playerUseTop2",
+					"duration": 150
+				},
+				{
+					"subTexture": "playerUseTop3",
+					"duration": 150
+				},
+				{
+					"subTexture": "playerUseTop4",
+					"duration": 150
+				},
+				{
+					"subTexture": "playerUseTop5",
+					"duration": 150
+				}
+			]
+		},
+
+		{
+			"name": "playerUseSprite_bottom",
+			"textureAtlas": "playerUseTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "playerUseBottom1",
+			"frames": [{
+					"subTexture": "playerUseBottom1",
+					"duration": 150
+				},
+				{
+					"subTexture": "playerUseBottom2",
+					"duration": 150
+				},
+				{
+					"subTexture": "playerUseBottom3",
+					"duration": 150
+				},
+				{
+					"subTexture": "playerUseBottom4",
+					"duration": 150
+				},
+				{
+					"subTexture": "playerUseBottom5",
+					"duration": 150
+				}
+			]
+		},
+
+		{
+			"name": "playerUseSprite_left",
+			"textureAtlas": "playerUseTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "playerUseLeft1",
+			"frames": [{
+					"subTexture": "playerUseLeft1",
+					"duration": 150
+				},
+				{
+					"subTexture": "playerUseLeft2",
+					"duration": 150
+				},
+				{
+					"subTexture": "playerUseLeft3",
+					"duration": 150
+				},
+				{
+					"subTexture": "playerUseLeft4",
+					"duration": 150
+				},
+				{
+					"subTexture": "playerUseLeft5",
+					"duration": 150
+				}
+			]
+		},
+
+		{
+			"name": "playerUseSprite_right",
+			"textureAtlas": "playerUseTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "playerUseRight1",
+			"frames": [{
+					"subTexture": "playerUseRight1",
+					"duration": 150
+				},
+				{
+					"subTexture": "playerUseRight2",
+					"duration": 150
+				},
+				{
+					"subTexture": "playerUseRight3",
+					"duration": 150
+				},
+				{
+					"subTexture": "playerUseRight4",
+					"duration": 150
+				},
+				{
+					"subTexture": "playerUseRight5",
+					"duration": 150
+				}
+			]
+		},
+
+		{
+			"name": "axeUseSprite_right",
+			"textureAtlas": "axeUseTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "axeUseRight1",
+			"frames": [{
+					"subTexture": "axeUseRight1",
+					"duration": 150
+				},
+				{
+					"subTexture": "axeUseRight2",
+					"duration": 150
+				},
+				{
+					"subTexture": "axeUseRight3",
+					"duration": 150
+				},
+				{
+					"subTexture": "axeUseRight4",
+					"duration": 150
+				},
+				{
+					"subTexture": "axeUseRight5",
+					"duration": 150
+				}
+			]
+		},
+
+		{
+			"name": "axeUseSprite_left",
+			"textureAtlas": "axeUseTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "axeUseLeft1",
+			"frames": [{
+					"subTexture": "axeUseLeft1",
+					"duration": 150
+				},
+				{
+					"subTexture": "axeUseLeft2",
+					"duration": 150
+				},
+				{
+					"subTexture": "axeUseLeft3",
+					"duration": 150
+				},
+				{
+					"subTexture": "axeUseLeft4",
+					"duration": 150
+				},
+				{
+					"subTexture": "axeUseLeft5",
+					"duration": 150
+				}
+			]
+		},
+
+		{
+			"name": "axeUseSprite_top",
+			"textureAtlas": "axeUseTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "axeUseTop1",
+			"frames": [{
+					"subTexture": "axeUseTop1",
+					"duration": 150
+				},
+				{
+					"subTexture": "axeUseTop2",
+					"duration": 150
+				},
+				{
+					"subTexture": "axeUseTop3",
+					"duration": 150
+				},
+				{
+					"subTexture": "axeUseTop4",
+					"duration": 150
+				},
+				{
+					"subTexture": "axeUseTop5",
+					"duration": 150
+				}
+			]
+		},
+
+		{
+			"name": "axeUseSprite_bottom",
+			"textureAtlas": "axeUseTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "axeUseBottom1",
+			"frames": [{
+					"subTexture": "axeUseBottom4",
+					"duration": 150
+				},
+				{
+					"subTexture": "axeUseBottom5",
+					"duration": 150
+				},
+				{
+					"subTexture": "axeUseBottom1",
+					"duration": 150
+				},
+				{
+					"subTexture": "axeUseBottom2",
+					"duration": 150
+				},
+				{
+					"subTexture": "axeUseBottom3",
+					"duration": 150
+				}
+			]
+		},
+
+		{
+			"name": "pickaxeUseSprite_right",
+			"textureAtlas": "pickaxeUseTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "pickaxeUseRight1",
+			"frames": [{
+					"subTexture": "pickaxeUseRight1",
+					"duration": 150
+				},
+				{
+					"subTexture": "pickaxeUseRight2",
+					"duration": 150
+				},
+				{
+					"subTexture": "pickaxeUseRight3",
+					"duration": 150
+				},
+				{
+					"subTexture": "pickaxeUseRight4",
+					"duration": 150
+				},
+				{
+					"subTexture": "pickaxeUseRight5",
+					"duration": 150
+				}
+			]
+		},
+
+		{
+			"name": "pickaxeUseSprite_left",
+			"textureAtlas": "pickaxeUseTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "pickaxeUseLeft1",
+			"frames": [{
+					"subTexture": "pickaxeUseLeft1",
+					"duration": 150
+				},
+				{
+					"subTexture": "pickaxeUseLeft2",
+					"duration": 150
+				},
+				{
+					"subTexture": "pickaxeUseLeft3",
+					"duration": 150
+				},
+				{
+					"subTexture": "pickaxeUseLeft4",
+					"duration": 150
+				},
+				{
+					"subTexture": "pickaxeUseLeft5",
+					"duration": 150
+				}
+			]
+		},
+
+		{
+			"name": "pickaxeUseSprite_top",
+			"textureAtlas": "pickaxeUseTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "pickaxeUseTop1",
+			"frames": [{
+					"subTexture": "pickaxeUseTop1",
+					"duration": 150
+				},
+				{
+					"subTexture": "pickaxeUseTop2",
+					"duration": 150
+				},
+				{
+					"subTexture": "pickaxeUseTop3",
+					"duration": 150
+				},
+				{
+					"subTexture": "pickaxeUseTop4",
+					"duration": 150
+				},
+				{
+					"subTexture": "pickaxeUseTop5",
+					"duration": 150
+				}
+			]
+		},
+
+		{
+			"name": "pickaxeUseSprite_bottom",
+			"textureAtlas": "pickaxeUseTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "pickaxeUseBottom1",
+			"frames": [{
+					"subTexture": "pickaxeUseBottom4",
+					"duration": 150
+				},
+				{
+					"subTexture": "pickaxeUseBottom5",
+					"duration": 150
+				},
+				{
+					"subTexture": "pickaxeUseBottom1",
+					"duration": 150
+				},
+				{
+					"subTexture": "pickaxeUseBottom2",
+					"duration": 150
+				},
+				{
+					"subTexture": "pickaxeUseBottom3",
+					"duration": 150
 				}
 			]
 		}
 	],
-	
-	"levels": [
-		{
+
+	"levels": [{
 			"description": [
 				"0111111112",
 				"3444444445",
-				"344444TE45",
+				"344444T445",
 				"3444444445",
 				"3EEEE44445",
 				"3EEEE44445",
@@ -341,35 +729,51 @@
 				"6777777778"
 			]
 		},
+
 		{
 			"description": [
 				"0111111112",
 				"3444444445",
 				"3444444445",
-				"34T4444T45",
+				"3444444h45",
 				"3444444445",
 				"3444444445",
-				"3T4444T445",
+				"344T444445",
 				"3444444445",
-				"3444444445",
-				"3444444445",
-				"3444444T45",
-				"34T4444445",
 				"3444444445",
 				"6777777778"
 			]
 		},
-		
+
+		{
+			"description": [
+				"0111111112",
+				"3444444445",
+				"3444h44445",
+				"34T4444T45",
+				"3444444445",
+				"3444444445",
+				"3T4444T4h5",
+				"3444444445",
+				"3444h44445",
+				"3444444445",
+				"3444h44T45",
+				"34T4444445",
+				"344h444445",
+				"6777777778"
+			]
+		},
+
 		{
 			"description": [
 				"0111111111111111112",
-				"34444T4444444444445",
-				"3444444444444444445",
-				"34T4444T444T4444T45",
-				"34444444444444T4445",
-				"3444444444444444445",
-				"3T4444T444T4444T445",
-				"3444444444444444445",
+				"34444T4444T44444T45",
+				"3444h44444444444445",
+				"34T4h4hhhh4T4444T45",
+				"3444h4h4444444T4445",
+				"3h44h4h444444444445",
+				"3T44h4h444T4444T445",
+				"3444h44444444444h45",
 				"6777777777777777778"
 			]
 		}

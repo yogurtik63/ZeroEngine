@@ -7,6 +7,7 @@
 
 #include "GameObjects/Player.h"
 #include "Level.h"
+#include "../Physics/PhysicsEngine.h"
 
 #include <GLFW/glfw3.h>
 #include <glm/mat4x4.hpp>
@@ -34,7 +35,7 @@ void Game::render() {
     }
 }
 
-void Game::update(const uint64_t delta) {
+void Game::update(const double delta) {
     if (m_pLevel) {
         m_pLevel->update(delta);
     }
@@ -42,22 +43,32 @@ void Game::update(const uint64_t delta) {
     if (m_pPlayer) {
         if (m_keys[GLFW_KEY_W]) {
             m_pPlayer->setOrientation(Player::EOrintation::Top);
-            m_pPlayer->move(true);
+            m_pPlayer->setVelocity(m_pPlayer->getMaxVelocity());
         }
         else if (m_keys[GLFW_KEY_A]) {
             m_pPlayer->setOrientation(Player::EOrintation::Left);
-            m_pPlayer->move(true);
+            m_pPlayer->setVelocity(m_pPlayer->getMaxVelocity());
         }
         else if (m_keys[GLFW_KEY_D]) {
             m_pPlayer->setOrientation(Player::EOrintation::Right);
-            m_pPlayer->move(true);
+            m_pPlayer->setVelocity(m_pPlayer->getMaxVelocity());
         }
         else if (m_keys[GLFW_KEY_S]) {
             m_pPlayer->setOrientation(Player::EOrintation::Bottom);
-            m_pPlayer->move(true);
+            m_pPlayer->setVelocity(m_pPlayer->getMaxVelocity());
+        }
+        else if (m_keys[GLFW_KEY_E]) {
+            m_pPlayer->setUsingTool(Player::EUsingTool::Pickaxe);
+            m_pPlayer->setUsingToolB(true);
+            m_pPlayer->startTimer(750);
+        }
+        else if (m_keys[GLFW_KEY_R]) {
+            m_pPlayer->setUsingTool(Player::EUsingTool::Axe);
+            m_pPlayer->setUsingToolB(true);
+            m_pPlayer->startTimer(750);
         }
         else {
-            m_pPlayer->move(false);
+            m_pPlayer->setVelocity(0);
         }
 
         m_pPlayer->update(delta);
@@ -77,9 +88,10 @@ bool Game::init() {
         return false;
     }
 
-    m_pLevel = std::make_unique<Level>(ResourceManager::getLevels()[0]);
+    m_pLevel = std::make_shared<Level>(ResourceManager::getLevels()[3]);
     m_windowSize.x = static_cast<int>(m_pLevel->getLevelWidth());
     m_windowSize.y = static_cast<int>(m_pLevel->getLevelHeight());
+    Physics::PhysicsEngine::setCurrentLevel(m_pLevel);
 
     glm::mat4 projectionMatrix = glm::ortho(0.f, static_cast<float>(m_windowSize.x), 0.f, static_cast<float>(m_windowSize.y), -100.f, 100.f);
 
@@ -87,7 +99,8 @@ bool Game::init() {
     pSpriteShaderProgram->setInt("tex", 0);
     pSpriteShaderProgram->setMatrix4("projectionMat", projectionMatrix);
 
-    m_pPlayer = std::make_unique<Player>(0.00000005f, m_pLevel->getPlayerRespawn(), glm::vec2(Level::BLOCK_SIZE, Level::BLOCK_SIZE + 6), 1.f);
+    m_pPlayer = std::make_shared<Player>(0.05, m_pLevel->getPlayerRespawn(), glm::vec2(Level::BLOCK_SIZE, Level::BLOCK_SIZE + 6), 1.2f);
+    Physics::PhysicsEngine::addDynamicGameObject(m_pPlayer);
     return true;
 }
 

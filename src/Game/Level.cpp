@@ -2,11 +2,14 @@
 
 #include "../Resources/ResourceManager.h"
 #include "GameObjects/Grass.h"
-#include "GameObjects/Tree.h"
+#include "GameObjects/Log.h"
 #include "GameObjects/Border.h"
+#include "GameObjects/Stone.h"
+#include "GameObjects/Empty.h"
 
 #include <iostream>
-
+#include <algorithm>
+#include <cmath>
 
 std::shared_ptr<IGameObject> Level::createGameObjectFromDescription(const char description, glm::vec2& position, const glm::vec2& size, const float rotation) {
 	switch (description)
@@ -39,9 +42,14 @@ std::shared_ptr<IGameObject> Level::createGameObjectFromDescription(const char d
 	case 'c':
 		return std::make_shared<Grass>(ResourceManager::getSprite("leftUpDirt"), position, size, rotation, 0.f);
 
+	case 'e':
+		return std::make_shared<Empty>(ResourceManager::getSprite("empty_tile"), position, size, rotation, 0.f);
+
+	case 'h':
+		return std::make_shared<Stone>(ResourceManager::getSprite("stone"), position, size, rotation, 1.f);
+
 	case 'T':
-		m_mapObjects.emplace_back(createGameObjectFromDescription('4', position, size, rotation));
-		return std::make_shared<Tree>(ResourceManager::getSprite("tree1"), position, size, rotation, 2.f);
+		return std::make_shared<Log>(ResourceManager::getSprite("log"), position, size, rotation, 1.f);
 
 	case 'E':
 		return std::make_shared<Grass>(ResourceManager::getSprite("middleGrass"), position, size, rotation, 0.f);
@@ -61,13 +69,17 @@ Level::Level(const std::vector<std::string>& levelDescription) {
 		std::cerr << "Empty level description" << std::endl;
 	}
 
-	m_width = levelDescription[0].length();
-	m_height = levelDescription.size();
+	m_widthBlocks = levelDescription[0].length();
+	m_heightBlocks = levelDescription.size() ;
 
-	m_playerRespawn = { (m_width / 2 - 0.5f) * BLOCK_SIZE, BLOCK_SIZE * 2 };
+	m_widthPixels = static_cast<unsigned int>(m_widthBlocks * BLOCK_SIZE);
+	m_heightPixels = static_cast<unsigned int>(m_heightBlocks * BLOCK_SIZE);
 
-	m_mapObjects.reserve(m_width * m_height + 4);
-	unsigned int currentBottomOffset = static_cast<unsigned int>(BLOCK_SIZE * (m_height - 1) + BLOCK_SIZE);
+	m_playerRespawn = { (m_widthBlocks / 2 - 0.5f) * BLOCK_SIZE, BLOCK_SIZE * 2 };
+
+	m_levelObjects.reserve(m_widthBlocks * m_heightBlocks + 4);
+	m_bgObjects.reserve(m_widthBlocks * m_heightBlocks);
+	unsigned int currentBottomOffset = static_cast<unsigned int>(BLOCK_SIZE * (m_heightBlocks - 1) + BLOCK_SIZE / 2.f);
 
 	for (const std::string& currentRow : levelDescription) {
 		unsigned int currentLeftOffset = BLOCK_SIZE / 2.f;
@@ -76,16 +88,35 @@ Level::Level(const std::vector<std::string>& levelDescription) {
 			switch (currentElement)
 			{
 			case 'R':
-				m_mapObjects.emplace_back(createGameObjectFromDescription('4', 
+				m_bgObjects.emplace_back(createGameObjectFromDescription('4', 
 					glm::vec2(currentLeftOffset, currentBottomOffset),
 					glm::vec2(BLOCK_SIZE, BLOCK_SIZE), 0.f));
 				m_playerRespawn = { currentLeftOffset, currentBottomOffset };
 				break;
 			default:
-				m_mapObjects.emplace_back(createGameObjectFromDescription(
-					currentElement,
-					glm::vec2(currentLeftOffset, currentBottomOffset),
-					glm::vec2(BLOCK_SIZE, BLOCK_SIZE), 0.f));
+				if (currentElement == '0' || currentElement == '1' || currentElement == '2' || currentElement == '3' ||
+					currentElement == '4' || currentElement == '5' || currentElement == '6' || currentElement == '7' ||
+					currentElement == '8' || currentElement == '9' || currentElement == 'a' || currentElement == 'b' ||
+					currentElement == 'c') {
+					m_bgObjects.emplace_back(createGameObjectFromDescription(
+						currentElement,
+						glm::vec2(currentLeftOffset, currentBottomOffset),
+						glm::vec2(BLOCK_SIZE, BLOCK_SIZE), 0.f));
+					m_levelObjects.emplace_back(createGameObjectFromDescription('e',
+						glm::vec2(currentLeftOffset, currentBottomOffset),
+						glm::vec2(BLOCK_SIZE, BLOCK_SIZE), 0.f));
+
+				}
+				else {
+					m_bgObjects.emplace_back(createGameObjectFromDescription('4',
+						glm::vec2(currentLeftOffset, currentBottomOffset),
+						glm::vec2(BLOCK_SIZE, BLOCK_SIZE), 0.f));
+					m_levelObjects.emplace_back(createGameObjectFromDescription(
+						currentElement,
+						glm::vec2(currentLeftOffset, currentBottomOffset),
+						glm::vec2(BLOCK_SIZE, BLOCK_SIZE), 0.f));
+				}
+				
 			}
 
 			currentLeftOffset += BLOCK_SIZE;
@@ -95,40 +126,53 @@ Level::Level(const std::vector<std::string>& levelDescription) {
 	}
 
 	// bottom border
-	m_mapObjects.emplace_back(std::make_shared<Border>(
+	m_levelObjects.emplace_back(std::make_shared<Border>(
 		glm::vec2(BLOCK_SIZE / 2.f, 0.f),
-		glm::vec2(m_width * BLOCK_SIZE, BLOCK_SIZE * 2.f), 
+		glm::vec2(m_widthBlocks * BLOCK_SIZE, BLOCK_SIZE / 2), 
 		0.f, 0.f));
 
 	// top border
-	m_mapObjects.emplace_back(std::make_shared<Border>(
-		glm::vec2(0.f, m_height * BLOCK_SIZE + BLOCK_SIZE),
-		glm::vec2((m_width + 1) * BLOCK_SIZE, BLOCK_SIZE / 2.f),
+	m_levelObjects.emplace_back(std::make_shared<Border>(
+		glm::vec2(BLOCK_SIZE / 2.f, m_heightBlocks * BLOCK_SIZE + BLOCK_SIZE / 2.f), 
+		glm::vec2(m_widthBlocks * BLOCK_SIZE, BLOCK_SIZE / 2.f),
 		0.f, 0.f));
 
 	// left border
-	m_mapObjects.emplace_back(std::make_shared<Border>(
+	m_levelObjects.emplace_back(std::make_shared<Border>(
 		glm::vec2(0.f, 0.f),
-		glm::vec2(BLOCK_SIZE / 2.f, (m_height + 1) * BLOCK_SIZE), 
+		glm::vec2(BLOCK_SIZE / 2.f, (m_heightBlocks + 1) * BLOCK_SIZE), 
 		0.f, 0.f));
 
 	// right border
-	m_mapObjects.emplace_back(std::make_shared<Border>(
-		glm::vec2(m_width * BLOCK_SIZE + BLOCK_SIZE / 2.f, 0.f),
-		glm::vec2(BLOCK_SIZE / 2.f, (m_height + 1) * BLOCK_SIZE), 
+	m_levelObjects.emplace_back(std::make_shared<Border>(
+		glm::vec2(m_widthBlocks * BLOCK_SIZE + BLOCK_SIZE / 2.f, 0.f),
+		glm::vec2(BLOCK_SIZE / 2.f, (m_heightBlocks + 1) * BLOCK_SIZE), 
 		0.f, 0.f));
+
 }
 
 void Level::render() const {
-	for (const auto& currentMapObject : m_mapObjects) {
+	for (const auto& currentMapObject : m_bgObjects) {
+		if (currentMapObject) {
+			currentMapObject->render();
+		}
+	}
+
+	for (const auto& currentMapObject : m_levelObjects) {
 		if (currentMapObject) {
 			currentMapObject->render();
 		}
 	}
 }
 
-void Level::update(const uint64_t delta) {
-	for (const auto& currentMapObject : m_mapObjects) {
+void Level::update(const double delta) {
+	for (const auto& currentMapObject : m_bgObjects) {
+		if (currentMapObject) {
+			currentMapObject->update(delta);
+		}
+	}
+
+	for (const auto& currentMapObject : m_levelObjects) {
 		if (currentMapObject) {
 			currentMapObject->update(delta);
 		}
@@ -136,9 +180,40 @@ void Level::update(const uint64_t delta) {
 }
 
 size_t Level::getLevelWidth() const {
-	return (m_width + 1) * BLOCK_SIZE;
+	return (m_widthBlocks + 1) * BLOCK_SIZE;
 }
 
 size_t Level::getLevelHeight() const {
-	return (m_height + 1.5f) * BLOCK_SIZE;
+	return (m_heightBlocks + 1) * BLOCK_SIZE;
+}
+
+std::vector<std::shared_ptr<IGameObject>> Level::getObjectsInArea(const glm::vec2& bottomLeft, const glm::vec2& topRight) {
+
+	std::vector<std::shared_ptr<IGameObject>> output;
+	output.reserve(9);
+
+	glm::vec2 bottomLeft_converted(std::clamp(bottomLeft.x - BLOCK_SIZE / 2, 0.f, static_cast<float>(m_widthPixels)),
+								   std::clamp(m_heightPixels - bottomLeft.y + BLOCK_SIZE / 2, 0.f, static_cast<float>(m_heightPixels)));
+	glm::vec2 topRight_converted(std::clamp(topRight.x - BLOCK_SIZE / 2, 0.f, static_cast<float>(m_widthPixels)),
+								 std::clamp(m_heightPixels - topRight.y + BLOCK_SIZE / 2, 0.f, static_cast<float>(m_heightPixels)));
+
+	size_t startX = static_cast<size_t>(floor(bottomLeft_converted.x / BLOCK_SIZE));
+	size_t endX = static_cast<size_t>(ceil(topRight_converted.x / BLOCK_SIZE));
+
+	size_t startY = static_cast<size_t>(floor(topRight_converted.y / BLOCK_SIZE));
+	size_t endY = static_cast<size_t>(ceil(bottomLeft_converted.y / BLOCK_SIZE));
+
+	for (size_t currentColumn = startX; currentColumn < endX; ++currentColumn)
+	{
+		for (size_t currentRow = startY; currentRow < endY; ++currentRow)
+		{
+			auto& currentObject = m_levelObjects[currentRow * m_widthBlocks + currentColumn];
+			if (currentObject && currentObject->getName() != "grass" && currentObject->getName() != "empty")
+			{
+				output.push_back(currentObject);
+			}
+		}
+	}
+
+	return output;
 }

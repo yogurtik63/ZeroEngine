@@ -16,6 +16,7 @@ public:
 	static void setExecutablePath(const std::string& executablePath);
 	static void unloadAllResources();
 
+	~ResourceManager() = delete;
 	ResourceManager() = delete;
 	ResourceManager(const ResourceManager&) = delete;
 	ResourceManager& operator = (const ResourceManager&) = delete;

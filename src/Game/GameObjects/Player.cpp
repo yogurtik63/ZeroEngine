@@ -3,12 +3,15 @@
 #include "../../Resources/ResourceManager.h"
 #include "../../Renderer/Sprite.h"
 
-Player::Player(const float velocity,
+
+Player::Player(const double maxVelocity,
 			   const glm::vec2& position,
 			   const glm::vec2& size,
-				const float layer)
+			   const float layer)
 	: IGameObject(position, size, 0.f, layer)
 	, m_eOrientation(EOrintation::Top)
+	, m_eUsingTool(EUsingTool::None)
+
 	, m_pSprite_top(ResourceManager::getSprite("playerSprite_top"))
 	, m_pSprite_bottom(ResourceManager::getSprite("playerSprite_bottom"))
 	, m_pSprite_left(ResourceManager::getSprite("playerSprite_left"))
@@ -19,31 +22,232 @@ Player::Player(const float velocity,
 	, m_spriteAnimator_left(m_pSprite_left)
 	, m_spriteAnimator_right(m_pSprite_right)
 
-	, m_move(false)
-	, m_velocity(velocity)
-	, m_moveOffset(glm::vec2(0.1f, 1.f))
+	, m_pSprite_use_top(ResourceManager::getSprite("playerUseSprite_top"))
+	, m_pSprite_use_bottom(ResourceManager::getSprite("playerUseSprite_bottom"))
+	, m_pSprite_use_left(ResourceManager::getSprite("playerUseSprite_left"))
+	, m_pSprite_use_right(ResourceManager::getSprite("playerUseSprite_right"))
 
-	, m_position(position)
+	, m_spriteAnimator_use_top(m_pSprite_use_top)
+	, m_spriteAnimator_use_bottom(m_pSprite_use_bottom)
+	, m_spriteAnimator_use_left(m_pSprite_use_left)
+	, m_spriteAnimator_use_right(m_pSprite_use_right)
+
+	, m_pSprite_pickaxe_top(ResourceManager::getSprite("pickaxeUseSprite_top"))
+	, m_pSprite_pickaxe_bottom(ResourceManager::getSprite("pickaxeUseSprite_bottom"))
+	, m_pSprite_pickaxe_left(ResourceManager::getSprite("pickaxeUseSprite_left"))
+	, m_pSprite_pickaxe_right(ResourceManager::getSprite("pickaxeUseSprite_right"))
+
+	, m_spriteAnimator_pickaxe_top(m_pSprite_pickaxe_top)
+	, m_spriteAnimator_pickaxe_bottom(m_pSprite_pickaxe_bottom)
+	, m_spriteAnimator_pickaxe_left(m_pSprite_pickaxe_left)
+	, m_spriteAnimator_pickaxe_right(m_pSprite_pickaxe_right)
+
+	, m_pSprite_axe_top(ResourceManager::getSprite("axeUseSprite_top"))
+	, m_pSprite_axe_bottom(ResourceManager::getSprite("axeUseSprite_bottom"))
+	, m_pSprite_axe_left(ResourceManager::getSprite("axeUseSprite_left"))
+	, m_pSprite_axe_right(ResourceManager::getSprite("axeUseSprite_right"))
+
+	, m_spriteAnimator_axe_top(m_pSprite_axe_top)
+	, m_spriteAnimator_axe_bottom(m_pSprite_axe_bottom)
+	, m_spriteAnimator_axe_left(m_pSprite_axe_left)
+	, m_spriteAnimator_axe_right(m_pSprite_axe_right)
+
+	, m_isUsing(false)
+	, m_maxVelocity(maxVelocity)
+
+	, m_sizeTool(glm::vec2(26.f, 22.f))
 {
+	m_useTimer.setCallBack([&]()
+		{
+			m_isUsing = false;
+		}
+	);
+
+	m_colliders.emplace_back(glm::vec2(0), glm::vec2(16, 16));
 }
 
 void Player::render() const {
-	switch (m_eOrientation)
-	{
-	case Player::EOrintation::Top:
-		m_pSprite_top->render(m_position, m_size, m_rotation, m_layer, m_spriteAnimator_top.getCurrentFrame());
-		break;
-	case Player::EOrintation::Bottom:
-		m_pSprite_bottom->render(m_position, m_size, m_rotation, m_layer, m_spriteAnimator_bottom.getCurrentFrame());
-		break;
-	case Player::EOrintation::Left:
-		m_pSprite_left->render(m_position, m_size, m_rotation, m_layer, m_spriteAnimator_left.getCurrentFrame());
-		break;
-	case Player::EOrintation::Right:
-		m_pSprite_right->render(m_position, m_size, m_rotation, m_layer, m_spriteAnimator_right.getCurrentFrame());
-		break;
+	if (m_isUsing) {
+		switch (m_eOrientation)
+		{
+		case Player::EOrintation::Top:
+			m_pSprite_use_top->render(m_position, m_size, m_rotation, m_layer, m_spriteAnimator_use_top.getCurrentFrame());
+			switch (m_eUsingTool)
+			{
+			case Player::EUsingTool::Axe:
+				m_pSprite_axe_top->render(m_position, m_sizeTool, m_rotation, m_layer + 0.1f, m_spriteAnimator_axe_top.getCurrentFrame());
+				break;
+			case Player::EUsingTool::Pickaxe:
+				m_pSprite_pickaxe_top->render(m_position, m_sizeTool, m_rotation, m_layer + 0.1f, m_spriteAnimator_pickaxe_top.getCurrentFrame());
+				break;
+			case Player::EUsingTool::None:
+				break;
+			default:
+				break;
+			}
+			break;
+		case Player::EOrintation::Bottom:
+			m_pSprite_use_bottom->render(m_position, m_size, m_rotation, m_layer, m_spriteAnimator_use_bottom.getCurrentFrame());
+			switch (m_eUsingTool)
+			{
+			case Player::EUsingTool::Axe:
+				m_pSprite_axe_bottom->render(m_position, m_sizeTool, m_rotation, m_layer + 0.1f, m_spriteAnimator_axe_bottom.getCurrentFrame());
+				break;
+			case Player::EUsingTool::Pickaxe:
+				m_pSprite_pickaxe_bottom->render(m_position, m_sizeTool, m_rotation, m_layer + 0.1f, m_spriteAnimator_pickaxe_bottom.getCurrentFrame());
+				break;
+			case Player::EUsingTool::None:
+				break;
+			default:
+				break;
+			}
+			break;
+		case Player::EOrintation::Left:
+			m_pSprite_use_left->render(m_position, m_size, m_rotation, m_layer, m_spriteAnimator_use_left.getCurrentFrame());
+			switch (m_eUsingTool)
+			{
+			case Player::EUsingTool::Axe:
+				m_pSprite_axe_left->render(m_position, m_sizeTool, m_rotation, m_layer + 0.1f, m_spriteAnimator_axe_left.getCurrentFrame());
+				break;
+			case Player::EUsingTool::Pickaxe:
+				m_pSprite_pickaxe_left->render(m_position, m_sizeTool, m_rotation, m_layer + 0.1f, m_spriteAnimator_pickaxe_left.getCurrentFrame());
+				break;
+			case Player::EUsingTool::None:
+				break;
+			default:
+				break;
+			}
+			break;
+		case Player::EOrintation::Right:
+			m_pSprite_use_right->render(m_position, m_size, m_rotation, m_layer, m_spriteAnimator_use_right.getCurrentFrame());
+			switch (m_eUsingTool)
+			{
+			case Player::EUsingTool::Axe:
+				m_pSprite_axe_right->render(m_position, m_sizeTool, m_rotation, m_layer + 0.1f, m_spriteAnimator_axe_right.getCurrentFrame());
+				break;
+			case Player::EUsingTool::Pickaxe:
+				m_pSprite_pickaxe_right->render(m_position, m_sizeTool, m_rotation, m_layer + 0.1f, m_spriteAnimator_pickaxe_right.getCurrentFrame());
+				break;
+			case Player::EUsingTool::None:
+				break;
+			default:
+				break;
+			}
+			break;
+		}
+	}
+	else {
+		switch (m_eOrientation)
+			{
+			case Player::EOrintation::Top:
+				m_pSprite_top->render(m_position, m_size, m_rotation, m_layer, m_spriteAnimator_top.getCurrentFrame());
+				break;
+			case Player::EOrintation::Bottom:
+				m_pSprite_bottom->render(m_position, m_size, m_rotation, m_layer, m_spriteAnimator_bottom.getCurrentFrame());
+				break;
+			case Player::EOrintation::Left:
+				m_pSprite_left->render(m_position, m_size, m_rotation, m_layer, m_spriteAnimator_left.getCurrentFrame());
+				break;
+			case Player::EOrintation::Right:
+				m_pSprite_right->render(m_position, m_size, m_rotation, m_layer, m_spriteAnimator_right.getCurrentFrame());
+				break;
+		}
+	}	
+}
+
+void Player::update(const double delta) {
+	if (m_isUsing) {
+		m_useTimer.update(delta);
+		switch (m_eOrientation)
+		{
+		case Player::EOrintation::Top:
+			m_spriteAnimator_use_top.update(delta);
+			switch (m_eUsingTool)
+			{
+			case Player::EUsingTool::Axe:
+				m_spriteAnimator_axe_top.update(delta);
+				break;
+			case Player::EUsingTool::Pickaxe:
+				m_spriteAnimator_pickaxe_top.update(delta);
+				break;
+			case Player::EUsingTool::None:
+				break;
+			default:
+				break;
+			}
+			break;
+		case Player::EOrintation::Bottom:
+			m_spriteAnimator_use_bottom.update(delta);
+			switch (m_eUsingTool)
+			{
+			case Player::EUsingTool::Axe:
+				m_spriteAnimator_axe_bottom.update(delta);
+				break;
+			case Player::EUsingTool::Pickaxe:
+				m_spriteAnimator_pickaxe_bottom.update(delta);
+				break;
+			case Player::EUsingTool::None:
+				break;
+			default:
+				break;
+			}
+			break;
+		case Player::EOrintation::Left:
+			m_spriteAnimator_use_left.update(delta);
+			switch (m_eUsingTool)
+			{
+			case Player::EUsingTool::Axe:
+				m_spriteAnimator_axe_left.update(delta);
+				break;
+			case Player::EUsingTool::Pickaxe:
+				m_spriteAnimator_pickaxe_left.update(delta);
+				break;
+			case Player::EUsingTool::None:
+				break;
+			default:
+				break;
+			}
+			break;
+		case Player::EOrintation::Right:
+			m_spriteAnimator_use_right.update(delta);
+			switch (m_eUsingTool)
+			{
+			case Player::EUsingTool::Axe:
+				m_spriteAnimator_axe_right.update(delta);
+				break;
+			case Player::EUsingTool::Pickaxe:
+				m_spriteAnimator_pickaxe_right.update(delta);
+				break;
+			case Player::EUsingTool::None:
+				break;
+			default:
+				break;
+			}
+			break;
+		}
+	}
+	else {
+		if (m_velocity > 0) {
+
+			switch (m_eOrientation)
+			{
+			case Player::EOrintation::Top:
+				m_spriteAnimator_top.update(delta);
+				break;
+			case Player::EOrintation::Bottom:
+				m_spriteAnimator_bottom.update(delta);
+				break;
+			case Player::EOrintation::Left:
+				m_spriteAnimator_left.update(delta);
+				break;
+			case Player::EOrintation::Right:
+				m_spriteAnimator_right.update(delta);
+				break;
+			}
+		}
 	}
 }
+
 
 void Player::setOrientation(const EOrintation eOrintation) {
 	if (m_eOrientation == eOrintation) {
@@ -54,48 +258,37 @@ void Player::setOrientation(const EOrintation eOrintation) {
 	switch (m_eOrientation)
 	{
 	case Player::EOrintation::Top:
-		m_moveOffset.x = 0.f;
-		m_moveOffset.y = 1.f;
+		m_direction.x = 0.f;
+		m_direction.y = 1.f;
 		break;
 	case Player::EOrintation::Bottom:
-		m_moveOffset.x = 0.f;
-		m_moveOffset.y = -1.f;
+		m_direction.x = 0.f;
+		m_direction.y = -1.f;
 		break;
 	case Player::EOrintation::Left:
-		m_moveOffset.x = -1.f;
-		m_moveOffset.y = 0.f;
+		m_direction.x = -1.f;
+		m_direction.y = 0.f;
 		break;
 	case Player::EOrintation::Right:
-		m_moveOffset.x = 1.f;
-		m_moveOffset.y = 0.f;
+		m_direction.x = 1.f;
+		m_direction.y = 0.f;
 		break;
 	default:
 		break;
 	}
 }
 
-void Player::move(const bool move) {
-	m_move = move;
+void Player::setUsingTool(const EUsingTool eUsingTool) {
+	if (m_eUsingTool == eUsingTool) {
+		return;
+	}
+
+	m_eUsingTool = eUsingTool;
 }
 
-void Player::update(const uint64_t delta) {
-	if (m_move) {
-		m_position += delta * m_velocity * m_moveOffset;
-
-		switch (m_eOrientation)
-		{
-		case Player::EOrintation::Top:
-			m_spriteAnimator_top.update(delta);
-			break;
-		case Player::EOrintation::Bottom:
-			m_spriteAnimator_bottom.update(delta);
-			break;
-		case Player::EOrintation::Left:
-			m_spriteAnimator_left.update(delta);
-			break;
-		case Player::EOrintation::Right:
-			m_spriteAnimator_right.update(delta);
-			break;
-		}
+void Player::setVelocity(const double velocity) {
+	if (!m_isUsing) {
+		m_velocity = velocity;
 	}
 }
+

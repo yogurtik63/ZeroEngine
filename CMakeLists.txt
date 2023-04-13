@@ -28,17 +28,29 @@ add_executable(${PROJECT_NAME}
 	src/Resources/ResourceManager.h
 	src/Resources/stb_image.h
 	
-	
 	src/Game/Game.cpp
 	src/Game/Game.h
 	src/Game/Level.cpp
 	src/Game/Level.h
+	
+	src/System/Timer.cpp
+	src/System/Timer.h
+	
+	src/Physics/PhysicsEngine.cpp
+	src/Physics/PhysicsEngine.h
+	
 	src/Game/GameObjects/Player.cpp
 	src/Game/GameObjects/Player.h
 	src/Game/GameObjects/Grass.cpp
 	src/Game/GameObjects/Grass.h
+	src/Game/GameObjects/Empty.cpp
+	src/Game/GameObjects/Empty.h
 	src/Game/GameObjects/Tree.cpp
 	src/Game/GameObjects/Tree.h
+	src/Game/GameObjects/Log.cpp
+	src/Game/GameObjects/Log.h
+	src/Game/GameObjects/Stone.cpp
+	src/Game/GameObjects/Stone.h
 	src/Game/GameObjects/Border.cpp
 	src/Game/GameObjects/Border.h
 	src/Game/GameObjects/IGameObject.cpp
