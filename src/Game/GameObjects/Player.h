@@ -12,6 +12,8 @@ namespace RenderEngine {
 	class Sprite;
 }
 
+class Bullet;
+
 class Player : public IGameObject {
 public:
 	enum class EOrintation {
@@ -28,8 +30,8 @@ public:
 		None
 	};
 
-	Player(const double maxVelocity, 
-		const glm::vec2& position, 
+	Player(const double maxVelocity,
+		const glm::vec2& position,
 		const glm::vec2& size,
 		const float layer);
 
@@ -40,7 +42,11 @@ public:
 	void setUsingToolB(bool use) { m_isUsing = use; }
 	void startTimer(double delta) { m_useTimer.start(delta); }
 
+
 	void setVelocity(const double velocity) override;
+
+	void onCollision() override;
+	void fire(const EUsingTool eUsingTool);
 
 	void update(const double delta) override;
 	double getMaxVelocity() const { return m_maxVelocity; }
@@ -89,6 +95,10 @@ private:
 	RenderEngine::SpriteAnimator m_spriteAnimator_axe_right;
 
 	Timer m_useTimer;
+
+	bool m_playerCollidedObject;
+	bool m_bulletCollidedObject;
+	std::shared_ptr<Bullet> m_pCurrentBullet;
 
 	double m_maxVelocity;
 	bool m_isUsing;

@@ -100,6 +100,13 @@
 		},
 		
 		{
+			"name": "fruit",
+			"textureAtlas": "mapTextureAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "fruit"
+		},
+		
+		{
 			"name": "empty_tile",
 			"textureAtlas": "mapTextureAtlas",
 			"shader": "spriteShader",
@@ -767,7 +774,7 @@
 		{
 			"description": [
 				"0111111111111111112",
-				"34444T4444T44444T45",
+				"3444444444444444445",
 				"3444h44444444444445",
 				"34T4h4hhhh4T4444T45",
 				"3444h4h4444444T4445",

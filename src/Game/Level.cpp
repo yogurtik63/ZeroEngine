@@ -208,11 +208,28 @@ std::vector<std::shared_ptr<IGameObject>> Level::getObjectsInArea(const glm::vec
 		for (size_t currentRow = startY; currentRow < endY; ++currentRow)
 		{
 			auto& currentObject = m_levelObjects[currentRow * m_widthBlocks + currentColumn];
-			if (currentObject && currentObject->getName() != "grass" && currentObject->getName() != "empty")
+			if (currentObject && currentObject->getObjectType() != IGameObject::EObjectType::Grass && currentObject->getObjectType() != IGameObject::EObjectType::Empty)
 			{
 				output.push_back(currentObject);
 			}
 		}
+	}
+
+	if (endX >= m_widthBlocks)
+	{
+		output.push_back(m_levelObjects[m_levelObjects.size() - 1]);
+	}
+	if (startX <= 1)
+	{
+		output.push_back(m_levelObjects[m_levelObjects.size() - 2]);
+	}
+	if (startY <= 1)
+	{
+		output.push_back(m_levelObjects[m_levelObjects.size() - 3]);
+	}
+	if (endY >= m_heightBlocks)
+	{
+		output.push_back(m_levelObjects[m_levelObjects.size() - 4]);
 	}
 
 	return output;

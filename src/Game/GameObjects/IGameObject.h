@@ -7,7 +7,25 @@
 
 class IGameObject {
 public:
-	IGameObject(const glm::vec2& position, const glm::vec2& size, const float rotation, const float layer);
+	enum class EObjectType {
+		Log,
+		Grass,
+		Stone,
+		Border,
+		Player,
+		Bullet,
+		Empty
+	};
+
+	enum class EToolBullet {
+		Pickaxe,
+		Axe,
+		None,
+
+		NoBullet
+	};
+
+	IGameObject(const EObjectType objectType, const glm::vec2& position, const glm::vec2& size, const float rotation, const float layer);
 	virtual void render() const = 0;
 	virtual void update(const double delta) = 0;
 	virtual ~IGameObject();
@@ -15,11 +33,19 @@ public:
 	virtual glm::vec2& getCurrentDirection() { return m_direction; }
 	virtual void setVelocity(const double velocity) { m_velocity = velocity; }
 	virtual double getCurrentVelocity() { return m_velocity; }
-	virtual std::string getName() { return m_name; }
-	virtual void setName(std::string name) { m_name = name; }
+
+	EObjectType getObjectType() const { return m_objectType; }
+	virtual void onCollision() {}
+
+	virtual EToolBullet getToolBullet() { return m_eToolBullet; }
+	virtual void setToolBullet(EToolBullet eToolBullet) { m_eToolBullet = eToolBullet; }
 
 	const glm::vec2& getSize() const { return m_size; }
-	const std::vector<Physics::AABB>& getColliders() const { return m_colliders; }
+	const std::vector<Physics::Collider>& getColliders() const { return m_colliders; }
+	virtual bool collides(const EObjectType objectType) { return true; }
+
+	virtual std::string getName() { return m_name; }
+	virtual void setName(std::string name) { m_name = name; }
 
 protected:
 	glm::vec2 m_position;
@@ -27,8 +53,12 @@ protected:
 	float m_rotation;
 	float m_layer;
 	std::string m_name;
+	EObjectType m_objectType;
+	EToolBullet m_eToolBullet;
 
 	glm::vec2 m_direction;
 	double m_velocity;
-	std::vector<Physics::AABB> m_colliders;
+	std::vector<Physics::Collider> m_colliders;
+
+
 };

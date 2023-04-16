@@ -16,8 +16,8 @@
 #include <memory>
 
 Game::Game(const glm::ivec2& windowSize)
-	: m_eCurrentGameState(EGameState::Active)
-    , m_windowSize(windowSize)
+    : m_windowSize(windowSize)
+	, m_eCurrentGameState(EGameState::Active)
 {
 	m_keys.fill(false);
 }
@@ -61,11 +61,13 @@ void Game::update(const double delta) {
             m_pPlayer->setUsingTool(Player::EUsingTool::Pickaxe);
             m_pPlayer->setUsingToolB(true);
             m_pPlayer->startTimer(750);
+            m_pPlayer->fire(Player::EUsingTool::Pickaxe);
         }
         else if (m_keys[GLFW_KEY_R]) {
             m_pPlayer->setUsingTool(Player::EUsingTool::Axe);
             m_pPlayer->setUsingToolB(true);
             m_pPlayer->startTimer(750);
+            m_pPlayer->fire(Player::EUsingTool::Axe);
         }
         else {
             m_pPlayer->setVelocity(0);

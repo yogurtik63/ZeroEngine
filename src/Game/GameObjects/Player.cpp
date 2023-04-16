@@ -3,14 +3,18 @@
 #include "../../Resources/ResourceManager.h"
 #include "../../Renderer/Sprite.h"
 
+#include "Bullet.h"
+#include "../../Physics/PhysicsEngine.h"
 
 Player::Player(const double maxVelocity,
 			   const glm::vec2& position,
 			   const glm::vec2& size,
 			   const float layer)
-	: IGameObject(position, size, 0.f, layer)
+	: IGameObject(IGameObject::EObjectType::Player, position, size, 0.f, layer)
 	, m_eOrientation(EOrintation::Top)
 	, m_eUsingTool(EUsingTool::None)
+
+	, m_pCurrentBullet(std::make_shared<Bullet>(0.01, m_position, m_size / 2.f))
 
 	, m_pSprite_top(ResourceManager::getSprite("playerSprite_top"))
 	, m_pSprite_bottom(ResourceManager::getSprite("playerSprite_bottom"))
@@ -55,6 +59,9 @@ Player::Player(const double maxVelocity,
 	, m_isUsing(false)
 	, m_maxVelocity(maxVelocity)
 
+	, m_playerCollidedObject(false)
+	, m_bulletCollidedObject(false)
+
 	, m_sizeTool(glm::vec2(26.f, 22.f))
 {
 	m_useTimer.setCallBack([&]()
@@ -64,9 +71,14 @@ Player::Player(const double maxVelocity,
 	);
 
 	m_colliders.emplace_back(glm::vec2(0), glm::vec2(16, 16));
+
+	Physics::PhysicsEngine::addDynamicGameObject(m_pCurrentBullet);
+	setName("player");
 }
 
 void Player::render() const {
+	/*m_pCurrentBullet->render();*/
+
 	if (m_isUsing) {
 		switch (m_eOrientation)
 		{
@@ -156,6 +168,8 @@ void Player::render() const {
 }
 
 void Player::update(const double delta) {
+	m_pCurrentBullet->update(delta);
+
 	if (m_isUsing) {
 		m_useTimer.update(delta);
 		switch (m_eOrientation)
@@ -292,3 +306,24 @@ void Player::setVelocity(const double velocity) {
 	}
 }
 
+void Player::onCollision() {
+
+}
+
+void Player::fire(const EUsingTool eUsingTool) {
+	if (!m_pCurrentBullet->isActive() && m_isUsing)
+	{
+		switch (eUsingTool)
+		{
+		case EUsingTool::Axe:
+			m_pCurrentBullet->setToolBullet(IGameObject::EToolBullet::Axe);
+			break;
+		case EUsingTool::Pickaxe:
+			m_pCurrentBullet->setToolBullet(IGameObject::EToolBullet::Pickaxe);
+			break;
+		default:
+			break;
+		}
+		m_pCurrentBullet->fire(m_position + m_size / 8.f - m_size * m_direction / 8.f, m_direction);
+	}
+}
