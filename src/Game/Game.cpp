@@ -6,8 +6,10 @@
 #include "../Renderer/Sprite.h"
 
 #include "GameObjects/Player.h"
-#include "Level.h"
+#include "GameStates/Level.h"
+#include "GameStates/StartScreen.h"
 #include "../Physics/PhysicsEngine.h"
+#include "../Renderer/Renderer.h"
 
 #include <GLFW/glfw3.h>
 #include <glm/mat4x4.hpp>
@@ -15,65 +17,72 @@
 #include <iostream>
 #include <memory>
 
-Game::Game(const glm::ivec2& windowSize)
+Game::Game(const glm::uvec2& windowSize)
     : m_windowSize(windowSize)
-	, m_eCurrentGameState(EGameState::Active)
+	, m_eCurrentGameState(EGameState::StartScreen)
 {
 	m_keys.fill(false);
 }
+
+void Game::updateViewport()
+{
+    const float map_aspect_ratio = static_cast<float>(getCurrentWidth()) / getCurrentHeight();
+    unsigned int viewPortWidth = m_windowSize.x;
+    unsigned int viewPortHeight = m_windowSize.y;
+    unsigned int viewPortLeftOffset = 0;
+    unsigned int viewPortBottomOffset = 0;
+
+    if (static_cast<float>(m_windowSize.x) / m_windowSize.y > map_aspect_ratio) {
+        viewPortWidth = static_cast<unsigned int>(m_windowSize.y * map_aspect_ratio);
+        viewPortLeftOffset = (m_windowSize.x - viewPortWidth) / 2;
+    }
+    else {
+        viewPortHeight = static_cast<unsigned int>(m_windowSize.x / map_aspect_ratio);
+        viewPortBottomOffset = (m_windowSize.y - viewPortHeight) / 2;
+    }
+
+    RenderEngine::Renderer::setViewport(viewPortWidth, viewPortHeight, viewPortLeftOffset, viewPortBottomOffset);
+
+    glm::mat4 projectionMatrix = glm::ortho(0.f, static_cast<float>(getCurrentWidth()), 0.f, static_cast<float>(getCurrentHeight()), -100.f, 100.f);
+    m_pSpriteShaderProgram->setMatrix4("projectionMat", projectionMatrix);
+}
+
+void Game::setWindowSize(const glm::uvec2 & windowSize)
+{
+    m_windowSize = windowSize;
+    updateViewport();
+}
+
 Game::~Game() {
 
 }
 
 void Game::render() {
-    if (m_pLevel) {
-        m_pLevel->render();
-    }
+    m_pCurrentGameState->render();
+}
 
-    if (m_pPlayer) {
-        m_pPlayer->render();
-    }
+void Game::startNewLevel(const size_t level)
+{
+    auto pLevel = std::make_shared<Level>(ResourceManager::getLevels()[3]);
+    m_pCurrentGameState = pLevel;
+    Physics::PhysicsEngine::setCurrentLevel(pLevel);
+    updateViewport();
 }
 
 void Game::update(const double delta) {
-    if (m_pLevel) {
-        m_pLevel->update(delta);
-    }
+    switch (m_eCurrentGameState)
+    {
+    case Game::EGameState::StartScreen:
+        if (m_keys[GLFW_KEY_ENTER])
+        {
+            m_eCurrentGameState = EGameState::Level;
+            startNewLevel(0);
+        }
+        break;
 
-    if (m_pPlayer) {
-        if (m_keys[GLFW_KEY_W]) {
-            m_pPlayer->setOrientation(Player::EOrintation::Top);
-            m_pPlayer->setVelocity(m_pPlayer->getMaxVelocity());
-        }
-        else if (m_keys[GLFW_KEY_A]) {
-            m_pPlayer->setOrientation(Player::EOrintation::Left);
-            m_pPlayer->setVelocity(m_pPlayer->getMaxVelocity());
-        }
-        else if (m_keys[GLFW_KEY_D]) {
-            m_pPlayer->setOrientation(Player::EOrintation::Right);
-            m_pPlayer->setVelocity(m_pPlayer->getMaxVelocity());
-        }
-        else if (m_keys[GLFW_KEY_S]) {
-            m_pPlayer->setOrientation(Player::EOrintation::Bottom);
-            m_pPlayer->setVelocity(m_pPlayer->getMaxVelocity());
-        }
-        else if (m_keys[GLFW_KEY_E]) {
-            m_pPlayer->setUsingTool(Player::EUsingTool::Pickaxe);
-            m_pPlayer->setUsingToolB(true);
-            m_pPlayer->startTimer(750);
-            m_pPlayer->fire(Player::EUsingTool::Pickaxe);
-        }
-        else if (m_keys[GLFW_KEY_R]) {
-            m_pPlayer->setUsingTool(Player::EUsingTool::Axe);
-            m_pPlayer->setUsingToolB(true);
-            m_pPlayer->startTimer(750);
-            m_pPlayer->fire(Player::EUsingTool::Axe);
-        }
-        else {
-            m_pPlayer->setVelocity(0);
-        }
-
-        m_pPlayer->update(delta);
+    case Game::EGameState::Level:
+        m_pCurrentGameState->processInput(m_keys);
+        m_pCurrentGameState->update(delta);
     }
 }
 
@@ -84,32 +93,27 @@ void Game::setKey(const int key, const int action) {
 bool Game::init() {
     ResourceManager::loadJSONResources("res/resources.json");
 
-    auto pSpriteShaderProgram = ResourceManager::getShaderProgram("spriteShader");
-    if (!pSpriteShaderProgram) {
+    m_pSpriteShaderProgram = ResourceManager::getShaderProgram("spriteShader");
+    if (!m_pSpriteShaderProgram) {
         std::cerr << "Can't find shader program" << "spriteShader" << std::endl;
         return false;
     }
 
-    m_pLevel = std::make_shared<Level>(ResourceManager::getLevels()[3]);
-    m_windowSize.x = static_cast<int>(m_pLevel->getLevelWidth());
-    m_windowSize.y = static_cast<int>(m_pLevel->getLevelHeight());
-    Physics::PhysicsEngine::setCurrentLevel(m_pLevel);
+    m_pSpriteShaderProgram->use();
+    m_pSpriteShaderProgram->setInt("tex", 0);
 
-    glm::mat4 projectionMatrix = glm::ortho(0.f, static_cast<float>(m_windowSize.x), 0.f, static_cast<float>(m_windowSize.y), -100.f, 100.f);
+    m_pCurrentGameState = std::make_shared<StartScreen>(ResourceManager::getStartScreen());
+    setWindowSize(m_windowSize);
 
-    pSpriteShaderProgram->use();
-    pSpriteShaderProgram->setInt("tex", 0);
-    pSpriteShaderProgram->setMatrix4("projectionMat", projectionMatrix);
-
-    m_pPlayer = std::make_shared<Player>(0.05, m_pLevel->getPlayerRespawn(), glm::vec2(Level::BLOCK_SIZE, Level::BLOCK_SIZE + 6), 1.2f);
-    Physics::PhysicsEngine::addDynamicGameObject(m_pPlayer);
     return true;
 }
 
-size_t Game::getCurrentLevelWidth() const {
-    return m_pLevel->getLevelWidth();
+unsigned int Game::getCurrentWidth() const
+{
+    return m_pCurrentGameState->getStateWidth();
 }
 
-size_t Game::getCurrentLevelHeight() const {
-    return m_pLevel->getLevelHeight();
+unsigned int Game::getCurrentHeight() const
+{
+    return m_pCurrentGameState->getStateHeight();
 }

@@ -30,8 +30,12 @@ add_executable(${PROJECT_NAME}
 	
 	src/Game/Game.cpp
 	src/Game/Game.h
-	src/Game/Level.cpp
-	src/Game/Level.h
+	
+	src/Game/GameStates/IGameState.h
+	src/Game/GameStates/StartScreen.cpp
+	src/Game/GameStates/StartScreen.h
+	src/Game/GameStates/Level.cpp
+	src/Game/GameStates/Level.h
 	
 	src/System/Timer.cpp
 	src/System/Timer.h
@@ -72,7 +76,8 @@ target_link_libraries(${PROJECT_NAME} glfw)
 add_subdirectory(external/glad)
 target_link_libraries(${PROJECT_NAME} glad)
 
-include_directories(external/glm)
+add_subdirectory(external/glm)
+target_link_libraries(${PROJECT_NAME} glm)
 
 include_directories(external/rapidjson/include)
 

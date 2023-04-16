@@ -16,7 +16,6 @@ Bullet::Bullet(const double velocity, const glm::vec2& position, const glm::vec2
     auto onCollisionCallback = [&](const IGameObject& object, const Physics::ECollisionDirection)
     {
         setVelocity(0);
-        std::cout << "Bullet shot" << std::endl;
         m_isActive = false;
     };
 
