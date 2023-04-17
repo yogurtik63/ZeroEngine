@@ -57,9 +57,9 @@ std::shared_ptr<IGameObject> Level::createGameObjectFromDescription(const char d
 	case 'E':
 		return std::make_shared<Grass>(ResourceManager::getSprite("middleGrass"), position, size, rotation, 0.f);
 		// return nullptr;
-	case 'H':
-		return std::make_shared<Grass>(ResourceManager::getSprite("middleGrass"), position, size, rotation, 0.f);
-		// return nullptr;
+	//case 'H':
+	//	return std::make_shared<Home>(ResourceManager::getSprite("home"), position, glm::vec2(size.x * 4, size.y * 5), rotation, 1.f);
+	//	// return nullptr;
 
 	default:
 		std::cerr << "Unknown GameObject description: " << description << std::endl;

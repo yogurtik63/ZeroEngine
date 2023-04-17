@@ -14,6 +14,7 @@ public:
 		Border,
 		Player,
 		Bullet,
+		Home,
 		Empty
 	};
 
@@ -59,6 +60,4 @@ protected:
 	glm::vec2 m_direction;
 	double m_velocity;
 	std::vector<Physics::Collider> m_colliders;
-
-
 };

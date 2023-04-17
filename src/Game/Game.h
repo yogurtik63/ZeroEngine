@@ -25,6 +25,9 @@ public:
 	void updateViewport();
 	void setWindowSize(const glm::uvec2& windowSize);
 
+	bool getClose() { return m_closeWindow; }
+	void setClose(bool closeWindow) { m_closeWindow = closeWindow; }
+
 private:
 	std::array<bool, 349> m_keys;
 
@@ -35,6 +38,7 @@ private:
 	};
 
 	glm::ivec2 m_windowSize;
+	bool m_closeWindow;
 	EGameState m_eCurrentGameState;
 
 	std::shared_ptr<IGameState> m_pCurrentGameState;

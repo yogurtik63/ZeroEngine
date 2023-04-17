@@ -88,10 +88,70 @@
 			"subTextures": [
 				"tree1", "tree2"
 			]
+		},
+		
+		{
+			"name": "menuTitleAtlas",
+			"filePath": "res/textures/blackMenu.png",
+			"subTextureWidth": 128,
+			"subTextureHeight": 64,
+			"subTextures": [
+				"title"
+			]
+		},
+		
+		{
+			"name": "cursor_16x16_Atlas",
+			"filePath": "res/textures/cursor_16x16.png",
+			"subTextureWidth": 16,
+			"subTextureHeight": 16,
+			"subTextures": [
+				"cursor1", "cursor2"
+			]
+		},
+		
+		{
+			"name": "homeAtlas",
+			"filePath": "res/textures/home.png",
+			"subTextureWidth": 64,
+			"subTextureHeight": 80,
+			"subTextures": [
+				"home"
+			]
 		}
 	],
 
 	"sprites": [
+		{
+			"name": "title",
+			"textureAtlas": "menuTitleAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "title"
+		},
+		
+		{
+			"name": "home",
+			"textureAtlas": "homeAtlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "home"
+		},
+		
+		{
+			"name": "cursor",
+			"textureAtlas": "cursor_16x16_Atlas",
+			"shader": "spriteShader",
+			"initialSubTexture": "cursor1",
+			"frames": [{
+					"subTexture": "cursor1",
+					"duration": 150
+				},
+				{
+					"subTexture": "cursor2",
+					"duration": 150
+				}
+			]
+		},
+		
 		{
 			"name": "stone",
 			"textureAtlas": "mapTextureAtlas",
@@ -723,15 +783,15 @@
 	],
 	
 	"start_screen" : [
-        "EEEE0111E111E111E111EEEE",
-        "EEEEEE4EE444E444E4E4EEEE",
-        "EEEEE4EEE4EEE44EE4E4EEEE",
-        "EEEE6777E777E7E7E777EEEE",
+        "EEEE0111E111E111E112EEEE",
+        "EEEEEE4EE444E444E4E5EEEE",
+        "EEEEE4EEE4EEE44EE4E5EEEE",
+        "EEEE6777E777E7E7E778EEEE",
         "EEEEEEEEEEEEEEEEEEEEEEEE",
-        "E011E1EE1E111E1E1EE1E111",
-        "E444E44E4E4EEE4E44E4E444",
-        "E4EEE4E44E4E4E4E4E44E4EE",
-        "E677E7EE7E777E7E7EE7E777"
+        "E011E1EE1E111E1E1EE1E112",
+        "E344E44E4E4EEE4E44E4E445",
+        "E3EEE4E44E4E4E4E4E44E4EE",
+        "E677E7EE7E777E7E7EE7E778"
     ],
 	
 	"levels": [{
@@ -794,6 +854,20 @@
 				"3T44h4h444T4444T445",
 				"3444h44444444444h45",
 				"6777777777777777778"
+			]
+		},
+		
+		{
+			"description": [
+				"011111111111112",
+				"34444T444444T45",
+				"344h44444444445",
+				"34444444Th444T5",
+				"3h444T44444h445",
+				"344h44444h44445",
+				"3444444T4444445",
+				"3444T44444T4445",
+				"677777777777778"
 			]
 		}
 	]

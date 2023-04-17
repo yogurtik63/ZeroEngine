@@ -45,6 +45,8 @@ add_executable(${PROJECT_NAME}
 	
 	src/Game/GameObjects/Player.cpp
 	src/Game/GameObjects/Player.h
+	src/Game/GameObjects/Home.cpp
+	src/Game/GameObjects/Home.h
 	src/Game/GameObjects/Grass.cpp
 	src/Game/GameObjects/Grass.h
 	src/Game/GameObjects/Empty.cpp
